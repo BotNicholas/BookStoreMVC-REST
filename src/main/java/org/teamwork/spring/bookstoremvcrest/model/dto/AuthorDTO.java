@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +29,7 @@ public class AuthorDTO implements DefaultDTO{
     private List<Integer> books;
 
     public AuthorDTO() {
+        this.books = new ArrayList<>();
     }
 
     public AuthorDTO(String firstname, String lastname, String initials, Date birthDate, Character gender, String contactDetails, String otherDetails) {
@@ -38,7 +40,7 @@ public class AuthorDTO implements DefaultDTO{
         this.gender = gender;
         this.contactDetails = contactDetails;
         this.otherDetails = otherDetails;
-        this.books = Collections.emptyList();
+        this.books = new ArrayList<>();
     }
 
     public AuthorDTO(String firstname, String lastname, String initials, Date birthDate, Character gender, String contactDetails, String otherDetails, List<Integer> books) {
@@ -122,6 +124,10 @@ public class AuthorDTO implements DefaultDTO{
 
     public void setBooks(List<Integer> books) {
         this.books = books;
+    }
+
+    public void addBook(Integer bookId){
+        books.add(bookId);
     }
 
     @Override

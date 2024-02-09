@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.Length;
 public class ContactDTO implements DefaultDTO {
     private Integer id;
     @NotNull(message = "Specify contact type!")
-    private Integer contactTypeCode;
+    private RefContactTypeDTO contactType;
     @NotEmpty(message = "Firstname can not be empty!")
     private String firstname;
     @NotEmpty(message = "Lastname can not be empty!")
@@ -25,8 +25,8 @@ public class ContactDTO implements DefaultDTO {
     public ContactDTO() {
     }
 
-    public ContactDTO(Integer contactTypeCode, String firstname, String lastname, String workPhone, String cellPhone, String otherDetails) {
-        this.contactTypeCode = contactTypeCode;
+    public ContactDTO(RefContactTypeDTO contactType, String firstname, String lastname, String workPhone, String cellPhone, String otherDetails) {
+        this.contactType = contactType;
         this.firstname = firstname;
         this.lastname = lastname;
         this.workPhone = workPhone;
@@ -42,12 +42,12 @@ public class ContactDTO implements DefaultDTO {
         this.id = id;
     }
 
-    public Integer getContactTypeCode() {
-        return contactTypeCode;
+    public RefContactTypeDTO getContactType() {
+        return contactType;
     }
 
-    public void setContactTypeCode(Integer contactTypeCode) {
-        this.contactTypeCode = contactTypeCode;
+    public void setContactType(RefContactTypeDTO contactType) {
+        this.contactType = contactType;
     }
 
     public String getFirstname() {
@@ -94,7 +94,7 @@ public class ContactDTO implements DefaultDTO {
     public String toString() {
         return "ContactDTO{" +
                 "id=" + id +
-                ", contactTypeCode=" + contactTypeCode +
+                ", contactTypeCode=" + contactType +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", workPhone='" + workPhone + '\'' +

@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class Author {
     private List<Book> books;
 
     public Author() {
+        this.books = new ArrayList<>();
     }
 
     public Author(String firstname, String lastname, String initials, Date birthDate, Character gender, String contactDetails, String otherDetails) {
@@ -46,6 +49,7 @@ public class Author {
         this.gender = gender;
         this.contactDetails = contactDetails;
         this.otherDetails = otherDetails;
+        this.books = new ArrayList<>();
     }
 
     public Integer getId() {
@@ -118,6 +122,10 @@ public class Author {
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    public void addBook(Book book){
+        this.books.add(book);
     }
 
     @Override

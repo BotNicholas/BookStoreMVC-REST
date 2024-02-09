@@ -1,5 +1,7 @@
 target/
 src/main/resources/application.properties
+src/main/java/org/teamwork/spring/bookstoremvcrest/controller/test.java
+
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

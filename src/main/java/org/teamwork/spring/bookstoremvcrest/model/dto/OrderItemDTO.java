@@ -6,9 +6,9 @@ import jakarta.validation.constraints.NotNull;
 public class OrderItemDTO implements DefaultDTO {
     private Integer id;
     @NotNull(message = "Specify the order!")
-    private Integer orderId;
+    private OrderDTO order;
     @NotNull(message = "Specify the order item!")
-    private Integer bookId;
+    private BookDTO book;
     @Min(value = 1, message = "Minipal agreed price is 1")
     private Double itemAgreedPrice;
     private String itemComment;
@@ -16,9 +16,9 @@ public class OrderItemDTO implements DefaultDTO {
     public OrderItemDTO() {
     }
 
-    public OrderItemDTO(Integer orderId, Integer bookId, Double itemAgreedPrice, String itemComment) {
-        this.orderId = orderId;
-        this.bookId = bookId;
+    public OrderItemDTO(OrderDTO order, BookDTO book, Double itemAgreedPrice, String itemComment) {
+        this.order = order;
+        this.book = book;
         this.itemAgreedPrice = itemAgreedPrice;
         this.itemComment = itemComment;
     }
@@ -31,20 +31,20 @@ public class OrderItemDTO implements DefaultDTO {
         this.id = id;
     }
 
-    public Integer getOrderId() {
-        return orderId;
+    public OrderDTO getOrder() {
+        return order;
     }
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
+    public void setOrder(OrderDTO order) {
+        this.order = order;
     }
 
-    public Integer getBookId() {
-        return bookId;
+    public BookDTO getBook() {
+        return book;
     }
 
-    public void setBookId(Integer bookId) {
-        this.bookId = bookId;
+    public void setBook(BookDTO book) {
+        this.book = book;
     }
 
     public Double getItemAgreedPrice() {
@@ -67,8 +67,8 @@ public class OrderItemDTO implements DefaultDTO {
     public String toString() {
         return "OrderItemDTO{" +
                 "id=" + id +
-                ", orderId=" + orderId +
-                ", bookId=" + bookId +
+                ", orderId=" + order +
+                ", bookId=" + book +
                 ", itemAgreedPrice=" + itemAgreedPrice +
                 ", itemComment='" + itemComment + '\'' +
                 '}';

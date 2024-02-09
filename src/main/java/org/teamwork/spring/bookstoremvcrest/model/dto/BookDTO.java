@@ -11,9 +11,9 @@ import java.util.Date;
 public class BookDTO implements DefaultDTO {
     private Integer id;
     @NotNull(message = "Author must be specified!")
-    private Integer authorId;
+    private AuthorDTO author;
     @NotNull(message = "Book category must be specified!")
-    private Integer categoryCode;
+    private BookCategoryDTO category;
     @NotEmpty(message = "ISBN can not be empty!")
     @Pattern(regexp = "\\d\\d\\d-\\d-\\d\\d-\\d\\d\\d\\d\\d\\d-\\d", message = "ISBN must be in format: xxx-x-xx-xxxxxx-x")
     @Length(min = 17, max = 17)
@@ -31,9 +31,9 @@ public class BookDTO implements DefaultDTO {
     public BookDTO() {
     }
 
-    public BookDTO(Integer authorId, Integer categoryCode, String isbn, Date publicationDate, Date dateAcquired, String title, Double recommendedPrice, String comments) {
-        this.authorId = authorId;
-        this.categoryCode = categoryCode;
+    public BookDTO(AuthorDTO author, BookCategoryDTO category, String isbn, Date publicationDate, Date dateAcquired, String title, Double recommendedPrice, String comments) {
+        this.author = author;
+        this.category = category;
         this.isbn = isbn;
         this.publicationDate = publicationDate;
         this.dateAcquired = dateAcquired;
@@ -50,20 +50,20 @@ public class BookDTO implements DefaultDTO {
         this.id = id;
     }
 
-    public Integer getAuthorId() {
-        return authorId;
+    public AuthorDTO getAuthorId() {
+        return author;
     }
 
-    public void setAuthorId(Integer authorId) {
-        this.authorId = authorId;
+    public void setAuthorId(AuthorDTO author) {
+        this.author = author;
     }
 
-    public Integer getCategoryCode() {
-        return categoryCode;
+    public BookCategoryDTO getCategoryCode() {
+        return category;
     }
 
-    public void setCategoryCode(Integer categoryCode) {
-        this.categoryCode = categoryCode;
+    public void setCategoryCode(BookCategoryDTO category) {
+        this.category = category;
     }
 
     public String getIsbn() {
@@ -118,8 +118,8 @@ public class BookDTO implements DefaultDTO {
     public String toString() {
         return "BookDTO{" +
                 "id=" + id +
-                ", authorId=" + authorId +
-                ", categoryCode=" + categoryCode +
+                ", authorId=" + author +
+                ", categoryCode=" + category +
                 ", isbn='" + isbn + '\'' +
                 ", publicationDate=" + publicationDate +
                 ", dateAcquired=" + dateAcquired +
