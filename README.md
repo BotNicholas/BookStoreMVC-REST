@@ -20,3 +20,11 @@ spring.jpa.hibernate.ddl-auto=update
 
 ---
 In this project is used `Spring Boot v3.1.8`
+
+## What is the difference between "simplicity" and "abstraction" mappers?
+
+--- 
+
+The main difference between `simplicity` and `abstraction`packages is that in the first one 
+each entity has its own mapper, while in `abstratcion` package is defined only one implementation, that is generic
+so it works for all the entities...

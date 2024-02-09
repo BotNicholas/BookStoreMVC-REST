@@ -1,4 +1,4 @@
-package org.teamwork.spring.bookstoremvcrest.mapper;
+package org.teamwork.spring.bookstoremvcrest.mapper.simplicity;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
