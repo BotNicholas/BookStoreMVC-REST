@@ -2,7 +2,7 @@ package org.teamwork.spring.bookstoremvcrest.model.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 
-public class BookCategoryDTO {
+public class BookCategoryDTO implements DefaultDTO {
     private Integer code;
     @NotEmpty(message = "Category must be specified!")
     private String categoryDescription;

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
-public class ContactDTO {
+public class ContactDTO implements DefaultDTO {
     private Integer id;
     @NotNull(message = "Specify contact type!")
     private Integer contactTypeCode;

@@ -7,7 +7,7 @@ import org.teamwork.spring.bookstoremvcrest.model.Customer;
 import java.util.Date;
 import java.util.List;
 
-public class OrderDTO {
+public class OrderDTO implements DefaultDTO {
     private Integer id;
     @NotNull(message = "Specify customer!")
     private Customer customer;

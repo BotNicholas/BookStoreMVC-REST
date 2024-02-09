@@ -16,5 +16,7 @@ spring.jpa.hibernate.ddl-auto=update
 ```
 [How to connect MySQL to Spring boot here...](https://spring.io/guides/gs/accessing-data-mysql#_create_the_application_properties_file)
 
-___
+## Spring Boot version
 
+---
+In this project is used `Spring Boot v3.1.8`

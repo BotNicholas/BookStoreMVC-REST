@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.Length;
 
 import java.util.Date;
 
-public class BookDTO {
+public class BookDTO implements DefaultDTO {
     private Integer id;
     @NotNull(message = "Author must be specified!")
     private Integer authorId;

@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class AuthorDTO {
+public class AuthorDTO implements DefaultDTO{
     private Integer id;
     @NotEmpty(message = "Firstname can not be empty!")
     private String firstname;

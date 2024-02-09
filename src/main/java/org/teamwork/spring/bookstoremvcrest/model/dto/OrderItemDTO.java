@@ -3,7 +3,7 @@ package org.teamwork.spring.bookstoremvcrest.model.dto;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-public class OrderItemDTO {
+public class OrderItemDTO implements DefaultDTO {
     private Integer id;
     @NotNull(message = "Specify the order!")
     private Integer orderId;
