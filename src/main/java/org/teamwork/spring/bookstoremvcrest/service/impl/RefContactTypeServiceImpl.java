@@ -43,6 +43,8 @@ public class RefContactTypeServiceImpl implements DefaultService<RefContactTypeD
 
         refContactType.setContactTypeDescription(obj.getContactTypeDescription());
 
+        refContactTypeRepository.save(refContactType);
+
         return mapper.toDTO(refContactType, RefContactTypeDTO.class);
     }
 

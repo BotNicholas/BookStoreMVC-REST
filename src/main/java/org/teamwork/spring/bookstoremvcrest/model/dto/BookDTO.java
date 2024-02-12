@@ -18,9 +18,9 @@ public class BookDTO implements DefaultDTO {
     @Pattern(regexp = "\\d\\d\\d-\\d-\\d\\d-\\d\\d\\d\\d\\d\\d-\\d", message = "ISBN must be in format: xxx-x-xx-xxxxxx-x")
     @Length(min = 17, max = 17)
     private String isbn;
-    @NotEmpty(message = "Publication date must be specified!")
+    @NotNull(message = "Publication date must be specified!")
     private Date publicationDate;
-    @NotEmpty(message = "Acquiring date must be specified!")
+    @NotNull(message = "Acquiring date must be specified!")
     private Date dateAcquired;
     @NotEmpty(message = "Specify the title!")
     private String title;
@@ -50,19 +50,19 @@ public class BookDTO implements DefaultDTO {
         this.id = id;
     }
 
-    public AuthorDTO getAuthorId() {
+    public AuthorDTO getAuthor() {
         return author;
     }
 
-    public void setAuthorId(AuthorDTO author) {
+    public void setAuthor(AuthorDTO author) {
         this.author = author;
     }
 
-    public BookCategoryDTO getCategoryCode() {
+    public BookCategoryDTO getCategory() {
         return category;
     }
 
-    public void setCategoryCode(BookCategoryDTO category) {
+    public void setCategory(BookCategoryDTO category) {
         this.category = category;
     }
 

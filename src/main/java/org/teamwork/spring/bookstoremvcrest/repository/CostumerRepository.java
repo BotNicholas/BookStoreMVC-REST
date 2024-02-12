@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import org.teamwork.spring.bookstoremvcrest.model.Costumer;
 
 @Repository
-public interface CostomerRepository extends JpaRepository<Costumer, Integer> {
+public interface CostumerRepository extends JpaRepository<Costumer, Integer> {
 }

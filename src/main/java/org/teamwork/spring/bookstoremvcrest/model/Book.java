@@ -27,10 +27,10 @@ public class Book {
     @Pattern(regexp = "\\d\\d\\d-\\d-\\d\\d-\\d\\d\\d\\d\\d\\d-\\d", message = "ISBN must be in format: xxx-x-xx-xxxxxx-x")
     @Length(min = 17, max = 17)
     private String isbn;
-    @NotEmpty(message = "Publication date must be specified!")
+    @NotNull(message = "Publication date must be specified!")
     @Column(name = "publication_date")
     private Date publicationDate;
-    @NotEmpty(message = "Acquiring date must be specified!")
+    @NotNull(message = "Acquiring date must be specified!")
     @Column(name = "date_aquired")
     private Date dateAcquired;
     @NotEmpty(message = "Specify the title!")

@@ -47,7 +47,7 @@ public class Order {
         return costumer;
     }
 
-    public void setCustomer(Costumer costumer) {
+    public void setCostumer(Costumer costumer) {
         this.costumer = costumer;
     }
 
