@@ -21,9 +21,9 @@ public class AuthorDTO implements DefaultDTO{
     private String initials;
     @NotNull(message = "Birthdate must be specified!")
     private Date birthDate;
-    @NotEmpty(message = "Gender must be specified!")
+    @NotNull(message = "Gender must be specified!")
     @Pattern(regexp = "^[MFU]$", message = "Gender must be in uppercase and only M(ale), F(emale) or U(ndefined)!")
-    private Character gender;
+    private String gender;
     private String contactDetails;
     private String otherDetails;
     private List<Integer> books;
@@ -32,7 +32,7 @@ public class AuthorDTO implements DefaultDTO{
         this.books = new ArrayList<>();
     }
 
-    public AuthorDTO(String firstname, String lastname, String initials, Date birthDate, Character gender, String contactDetails, String otherDetails) {
+    public AuthorDTO(String firstname, String lastname, String initials, Date birthDate, String gender, String contactDetails, String otherDetails) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.initials = initials;
@@ -43,7 +43,7 @@ public class AuthorDTO implements DefaultDTO{
         this.books = new ArrayList<>();
     }
 
-    public AuthorDTO(String firstname, String lastname, String initials, Date birthDate, Character gender, String contactDetails, String otherDetails, List<Integer> books) {
+    public AuthorDTO(String firstname, String lastname, String initials, Date birthDate, String gender, String contactDetails, String otherDetails, List<Integer> books) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.initials = initials;
@@ -94,11 +94,11 @@ public class AuthorDTO implements DefaultDTO{
         this.birthDate = birthDate;
     }
 
-    public Character getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Character gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

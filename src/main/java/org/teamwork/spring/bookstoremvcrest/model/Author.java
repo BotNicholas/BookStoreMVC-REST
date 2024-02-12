@@ -6,10 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "authors")
@@ -29,7 +26,7 @@ public class Author {
     private Date birthDate;
     @NotEmpty(message = "Gender must be specified!")
     @Pattern(regexp = "^[MFU]$", message = "Gender must be in uppercase and only M(ale), F(emale) or U(ndefined)!")
-    private Character gender;
+    private String gender;
     @Column(name = "contact_details")
     private String contactDetails;
     @Column(name = "other_details")
@@ -41,7 +38,7 @@ public class Author {
         this.books = new ArrayList<>();
     }
 
-    public Author(String firstname, String lastname, String initials, Date birthDate, Character gender, String contactDetails, String otherDetails) {
+    public Author(String firstname, String lastname, String initials, Date birthDate, String gender, String contactDetails, String otherDetails) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.initials = initials;
@@ -92,11 +89,11 @@ public class Author {
         this.birthDate = birthDate;
     }
 
-    public Character getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Character gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -140,5 +137,18 @@ public class Author {
                 ", contactDetails='" + contactDetails + '\'' +
                 ", otherDetails='" + otherDetails + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return Objects.equals(firstname, author.firstname) && Objects.equals(lastname, author.lastname) && Objects.equals(initials, author.initials) && Objects.equals(birthDate, author.birthDate) && Objects.equals(gender, author.gender) && Objects.equals(contactDetails, author.contactDetails) && Objects.equals(otherDetails, author.otherDetails) && Objects.equals(books, author.books);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstname, lastname, initials, birthDate, gender, contactDetails, otherDetails, books);
     }
 }
