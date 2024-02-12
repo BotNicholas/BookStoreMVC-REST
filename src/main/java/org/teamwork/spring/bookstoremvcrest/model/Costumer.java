@@ -27,7 +27,7 @@ public class Costumer {
     @NotEmpty(message = "Specify email!")
     @Pattern(regexp = "", message = "Email must have next pattern: example@gmail.com")
     private String email;
-    @OneToMany(mappedBy = "customer", cascade = {CascadeType.DETACH,
+    @OneToMany(mappedBy = "costumer", cascade = {CascadeType.DETACH,
                                                  CascadeType.MERGE,
                                                  CascadeType.PERSIST,
                                                  CascadeType.REFRESH})
