@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.teamwork.spring.bookstoremvcrest.model.*;
 import org.teamwork.spring.bookstoremvcrest.model.dto.AuthorDTO;
-import org.teamwork.spring.bookstoremvcrest.model.dto.CustomerDTO;
+import org.teamwork.spring.bookstoremvcrest.model.dto.CostumerDTO;
 import org.teamwork.spring.bookstoremvcrest.model.dto.OrderDTO;
 import org.teamwork.spring.bookstoremvcrest.repository.BookRepository;
 import org.teamwork.spring.bookstoremvcrest.repository.OrderItemRepository;
@@ -63,16 +63,16 @@ public class AppConfig {
 
     private void customerCustomMapper(ModelMapper mapper){
         //To DTO
-        mapper.typeMap(Customer.class, CustomerDTO.class).addMappings(mapping -> mapping.using((MappingContext<List<Order>, List<Integer>> context) -> {
+        mapper.typeMap(Costumer.class, CostumerDTO.class).addMappings(mapping -> mapping.using((MappingContext<List<Order>, List<Integer>> context) -> {
             List<Order> orders = context.getSource();
             return orders.stream().map(order -> order.getId()).collect(Collectors.toList());
-        }).map(Customer::getOrders, CustomerDTO::setOrders));
+        }).map(Costumer::getOrders, CostumerDTO::setOrders));
 
         //From DTO
-        mapper.typeMap(CustomerDTO.class, Customer.class).addMappings(mapping -> mapping.using((MappingContext<List<Integer>, List<Order>> context)->{
+        mapper.typeMap(CostumerDTO.class, Costumer.class).addMappings(mapping -> mapping.using((MappingContext<List<Integer>, List<Order>> context)->{
             List<Integer> ordersId = context.getSource();
             return ordersId.stream().map(orderId -> orderRepository.findById(orderId).orElse(null)).collect(Collectors.toList());
-        }).map(CustomerDTO::getOrders, Customer::setOrders));
+        }).map(CostumerDTO::getOrders, Costumer::setOrders));
     }
 
     private void orderCustomMapper(ModelMapper mapper){

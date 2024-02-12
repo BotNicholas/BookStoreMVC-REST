@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "customers")
-public class Customer {
+public class Costumer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -33,10 +33,10 @@ public class Customer {
                                                  CascadeType.REFRESH})
     private List<Order> orders;
 
-    public Customer() {
+    public Costumer() {
     }
 
-    public Customer(String idnp, String name, String address, String phone, String email) {
+    public Costumer(String idnp, String name, String address, String phone, String email) {
         this.idnp = idnp;
         this.name = name;
         this.address = address;

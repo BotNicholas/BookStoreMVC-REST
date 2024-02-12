@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
-public class CustomerDTO implements DefaultDTO {
+public class CostumerDTO implements DefaultDTO {
     private Integer id;
     @NotEmpty(message = "IDNP must be specified!")
     @Pattern(regexp = "^\\d{13}$", message = "IDNP must be of type 1234567890123!")
@@ -24,10 +24,10 @@ public class CustomerDTO implements DefaultDTO {
     private String email;
     private List<Integer> orders;
 
-    public CustomerDTO() {
+    public CostumerDTO() {
     }
 
-    public CustomerDTO(String idnp, String name, String address, String phone, String email, List<Integer> orders) {
+    public CostumerDTO(String idnp, String name, String address, String phone, String email, List<Integer> orders) {
         this.idnp = idnp;
         this.name = name;
         this.address = address;

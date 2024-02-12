@@ -2,7 +2,6 @@ package org.teamwork.spring.bookstoremvcrest.model.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import org.teamwork.spring.bookstoremvcrest.model.Customer;
 
 import java.util.Date;
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.List;
 public class OrderDTO implements DefaultDTO {
     private Integer id;
     @NotNull(message = "Specify customer!")
-    private CustomerDTO customer;
+    private CostumerDTO customer;
     @NotNull(message = "Specify order date")
     private Date orderDate;
     @Min(value = 1, message = "Minimal value is 1")
@@ -20,7 +19,7 @@ public class OrderDTO implements DefaultDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(CustomerDTO customer, Date orderDate, Double orderValue, List<Integer> itemList) {
+    public OrderDTO(CostumerDTO customer, Date orderDate, Double orderValue, List<Integer> itemList) {
         this.customer = customer;
         this.orderDate = orderDate;
         this.orderValue = orderValue;
@@ -35,11 +34,11 @@ public class OrderDTO implements DefaultDTO {
         this.id = id;
     }
 
-    public CustomerDTO getCustomer() {
+    public CostumerDTO getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CustomerDTO customer) {
+    public void setCustomer(CostumerDTO customer) {
         this.customer = customer;
     }
 
