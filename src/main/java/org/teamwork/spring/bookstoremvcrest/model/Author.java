@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -23,7 +24,7 @@ public class Author {
     private String initials;
     @NotNull(message = "Birthdate must be specified!")
     @Column(name = "birth_date")
-    private Date birthDate;
+    private LocalDate birthDate;
     @NotEmpty(message = "Gender must be specified!")
     @Pattern(regexp = "^[MFU]$", message = "Gender must be in uppercase and only M(ale), F(emale) or U(ndefined)!")
     private String gender;
@@ -38,7 +39,7 @@ public class Author {
         this.books = new ArrayList<>();
     }
 
-    public Author(String firstname, String lastname, String initials, Date birthDate, String gender, String contactDetails, String otherDetails) {
+    public Author(String firstname, String lastname, String initials, LocalDate birthDate, String gender, String contactDetails, String otherDetails) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.initials = initials;
@@ -81,11 +82,11 @@ public class Author {
         this.initials = initials;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

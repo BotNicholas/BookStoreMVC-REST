@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -20,7 +21,7 @@ public class AuthorDTO implements DefaultDTO{
     @Length(min = 2, max = 2)
     private String initials;
     @NotNull(message = "Birthdate must be specified!")
-    private Date birthDate;
+    private LocalDate birthDate;
     @NotNull(message = "Gender must be specified!")
     @Pattern(regexp = "^[MFU]$", message = "Gender must be in uppercase and only M(ale), F(emale) or U(ndefined)!")
     private String gender;
@@ -32,7 +33,7 @@ public class AuthorDTO implements DefaultDTO{
         this.books = new ArrayList<>();
     }
 
-    public AuthorDTO(String firstname, String lastname, String initials, Date birthDate, String gender, String contactDetails, String otherDetails) {
+    public AuthorDTO(String firstname, String lastname, String initials, LocalDate birthDate, String gender, String contactDetails, String otherDetails) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.initials = initials;
@@ -43,7 +44,7 @@ public class AuthorDTO implements DefaultDTO{
         this.books = new ArrayList<>();
     }
 
-    public AuthorDTO(String firstname, String lastname, String initials, Date birthDate, String gender, String contactDetails, String otherDetails, List<Integer> books) {
+    public AuthorDTO(String firstname, String lastname, String initials, LocalDate birthDate, String gender, String contactDetails, String otherDetails, List<Integer> books) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.initials = initials;
@@ -86,11 +87,11 @@ public class AuthorDTO implements DefaultDTO{
         this.initials = initials;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 

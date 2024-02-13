@@ -28,12 +28,13 @@ public class AuthorController {
     }
 
     @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> save(@Valid @RequestBody AuthorDTO authorDTO) throws UnexpectedIdException {
         if (authorDTO.getId() != null) {
             throw new UnexpectedIdException();
         }
         authorService.save(authorDTO);
-        return new ResponseEntity<>("Save success!", HttpStatus.OK);
+        return new ResponseEntity<>("Save success!", HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
