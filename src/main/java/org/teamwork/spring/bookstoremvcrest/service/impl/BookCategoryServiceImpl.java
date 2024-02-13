@@ -42,8 +42,8 @@ public class BookCategoryServiceImpl implements DefaultService<BookCategoryDTO, 
     public BookCategoryDTO update(Integer key, BookCategoryDTO obj) {
         BookCategory bookCategory = bookCategoryRepository.findById(key).orElse(new BookCategory());
 
-        bookCategory.setCode(obj.getCode());
         bookCategory.setCategoryDescription(obj.getCategoryDescription());
+        bookCategoryRepository.save(bookCategory);
 
         bookCategoryRepository.save(bookCategory);
 

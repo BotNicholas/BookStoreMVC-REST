@@ -28,3 +28,10 @@ In this project is used `Spring Boot v3.1.8`
 The main difference between `simplicity` and `abstraction`packages is that in the first one 
 each entity has its own mapper, while in `abstratcion` package is defined only one implementation, that is generic
 so it works for all the entities...
+
+## Do not use ID on save!
+
+---
+
+ID is not expected to be used while saving new object, it is simple!
+

@@ -34,11 +34,11 @@ public class OrderDTO implements DefaultDTO {
         this.id = id;
     }
 
-    public CostumerDTO getCustomer() {
+    public CostumerDTO getCostumer() {
         return customer;
     }
 
-    public void setCustomer(CostumerDTO customer) {
+    public void setCostumer(CostumerDTO customer) {
         this.customer = customer;
     }
 

@@ -28,7 +28,7 @@ public class AuthorController {
     }
 
     @PostMapping("")
-    public ResponseEntity<String> save(@RequestBody AuthorDTO authorDTO) throws UnexpectedIdException {
+    public ResponseEntity<String> save(@Valid @RequestBody AuthorDTO authorDTO) throws UnexpectedIdException {
         if (authorDTO.getId() != null) {
             throw new UnexpectedIdException();
         }

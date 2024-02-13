@@ -3,8 +3,12 @@ package org.teamwork.spring.bookstoremvcrest.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.teamwork.spring.bookstoremvcrest.mapper.abstraction.AbstractMapper;
+import org.teamwork.spring.bookstoremvcrest.model.Author;
 import org.teamwork.spring.bookstoremvcrest.model.Book;
+import org.teamwork.spring.bookstoremvcrest.model.BookCategory;
 import org.teamwork.spring.bookstoremvcrest.model.dto.BookDTO;
+import org.teamwork.spring.bookstoremvcrest.repository.AuthorRepository;
+import org.teamwork.spring.bookstoremvcrest.repository.BookCategoryRepository;
 import org.teamwork.spring.bookstoremvcrest.repository.BookRepository;
 import org.teamwork.spring.bookstoremvcrest.service.DefaultService;
 
@@ -15,6 +19,10 @@ import java.util.stream.Collectors;
 public class BookServiceImpl implements DefaultService<BookDTO, Book, Integer> {
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private AuthorRepository authorRepository;
+    @Autowired
+    private BookCategoryRepository categoryRepository;
     @Autowired
     private AbstractMapper mapper;
     @Override
@@ -40,6 +48,17 @@ public class BookServiceImpl implements DefaultService<BookDTO, Book, Integer> {
     public BookDTO update(Integer key, BookDTO obj) {
         Book book = bookRepository.findById(key).orElse(new Book());
 
+        Author author = book.getAuthor();
+        if (!book.getAuthor().getId().equals(obj.getAuthor().getId())) {
+            author = authorRepository.findById(obj.getAuthor().getId()).orElse(null);
+        }
+        BookCategory category = book.getCategory();
+        if (!book.getCategory().getCode().equals(obj.getCategory().getCode())) {
+            category = categoryRepository.findById(obj.getCategory().getCode()).orElse(null);
+        }
+
+        book.setAuthor(author);
+        book.setCategory(category);
         book.setIsbn(obj.getIsbn());
         book.setPublicationDate(obj.getPublicationDate());
         book.setDateAcquired(obj.getDateAcquired());

@@ -3,8 +3,10 @@ package org.teamwork.spring.bookstoremvcrest.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.teamwork.spring.bookstoremvcrest.mapper.abstraction.AbstractMapper;
+import org.teamwork.spring.bookstoremvcrest.model.Costumer;
 import org.teamwork.spring.bookstoremvcrest.model.Order;
 import org.teamwork.spring.bookstoremvcrest.model.dto.OrderDTO;
+import org.teamwork.spring.bookstoremvcrest.repository.CostumerRepository;
 import org.teamwork.spring.bookstoremvcrest.repository.OrderRepository;
 import org.teamwork.spring.bookstoremvcrest.service.DefaultService;
 
@@ -15,6 +17,8 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements DefaultService<OrderDTO, Order, Integer> {
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private CostumerRepository costumerRepository;
     @Autowired
     private AbstractMapper mapper;
     @Override
@@ -40,7 +44,13 @@ public class OrderServiceImpl implements DefaultService<OrderDTO, Order, Integer
     @Override
     public OrderDTO update(Integer key, OrderDTO obj) {
         Order order = orderRepository.findById(key).orElse(new Order());
+        Costumer costumer = order.getCustomer();
 
+        if (!order.getCustomer().getId().equals(obj.getCostumer().getId())) {
+            costumer = costumerRepository.findById(obj.getCostumer().getId()).orElse(null);
+        }
+
+        order.setCostumer(costumer);
         order.setOrderDate(obj.getOrderDate());
         order.setOrderValue(obj.getOrderValue());
 

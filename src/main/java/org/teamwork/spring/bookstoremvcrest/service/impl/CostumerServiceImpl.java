@@ -6,7 +6,7 @@ import org.teamwork.spring.bookstoremvcrest.mapper.abstraction.AbstractMapper;
 import org.teamwork.spring.bookstoremvcrest.model.Costumer;
 import org.teamwork.spring.bookstoremvcrest.model.dto.CostumerDTO;
 import org.teamwork.spring.bookstoremvcrest.service.DefaultService;
-import org.teamwork.spring.bookstoremvcrest.repository.CostomerRepository;
+import org.teamwork.spring.bookstoremvcrest.repository.CostumerRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class CostumerServiceImpl implements DefaultService<CostumerDTO, Costumer, Integer> {
     @Autowired
-    private CostomerRepository costomerRepository;
+    private CostumerRepository costomerRepository;
     @Autowired
     private AbstractMapper mapper;
 
@@ -41,15 +41,12 @@ public class CostumerServiceImpl implements DefaultService<CostumerDTO, Costumer
     @Override
     public CostumerDTO update(Integer key, CostumerDTO obj) {
         Costumer costumer = costomerRepository.findById(key).orElse(new Costumer());
-        System.out.println(costumer.toString());
 
         costumer.setIdnp(obj.getIdnp());
         costumer.setName(obj.getName());
         costumer.setAddress(obj.getAddress());
         costumer.setPhone(obj.getPhone());
         costumer.setEmail(obj.getEmail());
-
-        System.out.println(costumer.toString());
 
         costomerRepository.save(costumer);
 
