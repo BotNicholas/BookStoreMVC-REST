@@ -26,7 +26,6 @@ public class ContactServiceImpl implements DefaultService<ContactDTO, Contact, I
     public List<ContactDTO> findAll() {
         List<Contact> contacts = contactRepository.findAll();
         List<ContactDTO> contactDTOS = contacts.stream().map(contact -> mapper.toDTO(contact, ContactDTO.class)).collect(Collectors.toList());
-
         return contactDTOS;
     }
 
@@ -38,28 +37,14 @@ public class ContactServiceImpl implements DefaultService<ContactDTO, Contact, I
     @Override
     public ContactDTO save(ContactDTO obj) {
         Contact contact = contactRepository.save(mapper.toEntity(obj, Contact.class));
-
         return mapper.toDTO(contact, ContactDTO.class);
     }
 
     @Override
     public ContactDTO update(Integer key, ContactDTO obj) {
-        Contact contact = contactRepository.findById(key).orElse(new Contact());
-
-        RefContactType contactType = contact.getContactType();
-        if (!contact.getContactType().getCode().equals(obj.getContactType().getCode())) {
-            contactType = contactTypeRepository.findById(obj.getContactType().getCode()).orElse(null);
-        }
-
-        contact.setContactType(contactType);
-        contact.setFirstname(obj.getFirstname());
-        contact.setLastname(obj.getLastname());
-        contact.setWorkPhone(obj.getWorkPhone());
-        contact.setCellPhone(obj.getCellPhone());
-        contact.setOtherDetails(obj.getOtherDetails());
-
+        Contact contact = mapper.toEntity(obj, Contact.class);
+        contact.setId(key);
         contactRepository.save(contact);
-
         return mapper.toDTO(contact, ContactDTO.class);
     }
 

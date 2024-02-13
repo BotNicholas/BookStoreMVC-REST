@@ -22,7 +22,6 @@ public class AuthorServiceImpl implements DefaultService<AuthorDTO, Author, Inte
     public List<AuthorDTO> findAll() {
         List<Author> authors = authorRepository.findAll();
         List<AuthorDTO> authorsDTOS = authors.stream().map(author -> mapper.toDTO(author, AuthorDTO.class)).collect(Collectors.toList());
-
         return authorsDTOS;
     }
 
@@ -39,18 +38,9 @@ public class AuthorServiceImpl implements DefaultService<AuthorDTO, Author, Inte
 
     @Override
     public AuthorDTO update(Integer key, AuthorDTO authorDTO) {
-        Author author = authorRepository.findById(key).orElse(new Author());
-
-        author.setFirstname(authorDTO.getFirstname());
-        author.setLastname(authorDTO.getLastname());
-        author.setInitials(authorDTO.getInitials());
-        author.setBirthDate(authorDTO.getBirthDate());
-        author.setGender(authorDTO.getGender());
-        author.setContactDetails(authorDTO.getContactDetails());
-        author.setOtherDetails(authorDTO.getOtherDetails());
-
+        Author author = mapper.toEntity(authorDTO, Author.class);
+        author.setId(key);
         authorRepository.save(author);
-
         return mapper.toDTO(author, AuthorDTO.class);
     }
 

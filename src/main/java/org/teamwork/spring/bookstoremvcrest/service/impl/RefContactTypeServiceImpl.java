@@ -21,7 +21,6 @@ public class RefContactTypeServiceImpl implements DefaultService<RefContactTypeD
     public List<RefContactTypeDTO> findAll() {
         List<RefContactType> refContactTypes = refContactTypeRepository.findAll();
         List<RefContactTypeDTO> refContactTypeDTOS = refContactTypes.stream().map(refContactType -> mapper.toDTO(refContactType, RefContactTypeDTO.class)).collect(Collectors.toList());
-
         return refContactTypeDTOS;
     }
 
@@ -33,18 +32,14 @@ public class RefContactTypeServiceImpl implements DefaultService<RefContactTypeD
     @Override
     public RefContactTypeDTO save(RefContactTypeDTO obj) {
         RefContactType refContactType = refContactTypeRepository.save(mapper.toEntity(obj, RefContactType.class));
-
         return mapper.toDTO(refContactType, RefContactTypeDTO.class);
     }
 
     @Override
     public RefContactTypeDTO update(Integer key, RefContactTypeDTO obj) {
-        RefContactType refContactType = refContactTypeRepository.findById(key).orElse(new RefContactType());
-
-        refContactType.setContactTypeDescription(obj.getContactTypeDescription());
-
+        RefContactType refContactType = mapper.toEntity(obj, RefContactType.class);
+        refContactType.setCode(key);
         refContactTypeRepository.save(refContactType);
-
         return mapper.toDTO(refContactType, RefContactTypeDTO.class);
     }
 

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.teamwork.spring.bookstoremvcrest.mapper.abstraction.AbstractMapper;
 import org.teamwork.spring.bookstoremvcrest.model.Book;
+import org.teamwork.spring.bookstoremvcrest.model.Costumer;
 import org.teamwork.spring.bookstoremvcrest.model.Order;
 import org.teamwork.spring.bookstoremvcrest.model.OrderItem;
 import org.teamwork.spring.bookstoremvcrest.model.dto.OrderItemDTO;
@@ -30,7 +31,6 @@ public class OrderItemServiceImpl implements DefaultService<OrderItemDTO, OrderI
     public List<OrderItemDTO> findAll() {
         List<OrderItem> orderItems = orderItemRepository.findAll();
         List<OrderItemDTO> orderItemDTOS = orderItems.stream().map(orderItem -> mapper.toDTO(orderItem, OrderItemDTO.class)).collect(Collectors.toList());
-
         return orderItemDTOS;
     }
 
@@ -42,31 +42,14 @@ public class OrderItemServiceImpl implements DefaultService<OrderItemDTO, OrderI
     @Override
     public OrderItemDTO save(OrderItemDTO obj) {
         OrderItem orderItem = orderItemRepository.save(mapper.toEntity(obj, OrderItem.class));
-
         return mapper.toDTO(orderItem, OrderItemDTO.class);
     }
 
     @Override
     public OrderItemDTO update(Integer key, OrderItemDTO obj) {
-        OrderItem orderItem = orderItemRepository.findById(key).orElse(new OrderItem());
-
-        Order order = orderItem.getOrder();
-        if (orderItem.getOrder().getId().equals(obj.getOrder().getId())) {
-            order = orderRepository.findById(obj.getOrder().getId()).orElse(null);
-        }
-
-        Book book = orderItem.getBook();
-        if (orderItem.getBook().getId().equals(obj.getBook().getId())) {
-            book = bookRepository.findById(obj.getBook().getId()).orElse(null);
-        }
-
-        orderItem.setOrder(order);
-        orderItem.setBook(book);
-        orderItem.setItemAgreedPrice(obj.getItemAgreedPrice());
-        orderItem.setItemComment(obj.getItemComment());
-
+        OrderItem orderItem = mapper.toEntity(obj, OrderItem.class);
+        orderItem.setId(key);
         orderItemRepository.save(orderItem);
-
         return mapper.toDTO(orderItem, OrderItemDTO.class);
     }
 

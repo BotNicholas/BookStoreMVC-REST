@@ -18,33 +18,38 @@ public class CostumerController {
     private CostumerServiceImpl costumerService;
 
     @GetMapping("")
-    public ResponseEntity<List<CostumerDTO>> findAll() {
-        return new ResponseEntity<>(costumerService.findAll(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<CostumerDTO> findAll() {
+        return costumerService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CostumerDTO> findById(@PathVariable("id") Integer id) {
-        return new ResponseEntity<>(costumerService.findByKey(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public CostumerDTO findById(@PathVariable("id") Integer id) {
+        return costumerService.findByKey(id);
     }
 
     @PostMapping("")
-    public ResponseEntity<String> save(@RequestBody CostumerDTO costumerDTO) throws UnexpectedIdException {
+    @ResponseStatus(HttpStatus.OK)
+    public String save(@RequestBody CostumerDTO costumerDTO) throws UnexpectedIdException {
         if (costumerDTO.getId() != null) {
             throw new UnexpectedIdException();
         }
         costumerService.save(costumerDTO);
-        return new ResponseEntity<>("Save success !", HttpStatus.OK);
+        return "Save success!";
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> update(@Valid @RequestBody CostumerDTO costumerDTO, @PathVariable("id") Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public String update(@Valid @RequestBody CostumerDTO costumerDTO, @PathVariable("id") Integer id) {
         costumerService.update(id, costumerDTO);
-        return new ResponseEntity<>("Update successful!", HttpStatus.OK);
+        return "Update successful!";
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<String> delete(@PathVariable("id") Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    private String delete(@PathVariable("id") Integer id) {
         costumerService.delete(id);
-        return new ResponseEntity<>("Success!", HttpStatus.OK);
+        return "Success!";
     }
 }

@@ -18,33 +18,38 @@ public class ContactController {
     private ContactServiceImpl contactService;
 
     @GetMapping("")
-    public ResponseEntity<List<ContactDTO>> findAll(){
-        return new ResponseEntity<>(contactService.findAll(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<ContactDTO> findAll(){
+        return contactService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ContactDTO> findById(@PathVariable("id") Integer id){
-        return new ResponseEntity<>(contactService.findByKey(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public ContactDTO findById(@PathVariable("id") Integer id){
+        return contactService.findByKey(id);
     }
 
     @PostMapping("")
-    public ResponseEntity<String> save(@Valid @RequestBody ContactDTO contactDTO) throws UnexpectedIdException {
+    @ResponseStatus(HttpStatus.OK)
+    public String save(@Valid @RequestBody ContactDTO contactDTO) throws UnexpectedIdException {
         if (contactDTO.getId() != null) {
             throw  new UnexpectedIdException();
         }
         contactService.save(contactDTO);
-        return new ResponseEntity<>("Success!", HttpStatus.OK);
+        return "Success!";
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> update(@Valid @RequestBody ContactDTO contactDTO, @PathVariable("id") Integer id){
+    @ResponseStatus(HttpStatus.OK)
+    public String update(@Valid @RequestBody ContactDTO contactDTO, @PathVariable("id") Integer id){
         contactService.update(id, contactDTO);
-        return new ResponseEntity<>("Success!", HttpStatus.OK);
+        return "Success!";
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Integer id){
+    @ResponseStatus(HttpStatus.OK)
+    public String delete(@PathVariable("id") Integer id){
         contactService.delete(id);
-        return new ResponseEntity<>("Success!", HttpStatus.OK);
+        return "Success!";
     }
 }

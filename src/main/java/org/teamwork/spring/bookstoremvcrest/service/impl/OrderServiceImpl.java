@@ -25,7 +25,6 @@ public class OrderServiceImpl implements DefaultService<OrderDTO, Order, Integer
     public List<OrderDTO> findAll() {
         List<Order> orders = orderRepository.findAll();
         List<OrderDTO> orderDTOS = orders.stream().map(order -> mapper.toDTO(order, OrderDTO.class)).collect(Collectors.toList());
-
         return orderDTOS;
     }
 
@@ -37,25 +36,14 @@ public class OrderServiceImpl implements DefaultService<OrderDTO, Order, Integer
     @Override
     public OrderDTO save(OrderDTO obj) {
         Order order = orderRepository.save(mapper.toEntity(obj, Order.class));
-
         return mapper.toDTO(order, OrderDTO.class);
     }
 
     @Override
     public OrderDTO update(Integer key, OrderDTO obj) {
-        Order order = orderRepository.findById(key).orElse(new Order());
-        Costumer costumer = order.getCustomer();
-
-        if (!order.getCustomer().getId().equals(obj.getCostumer().getId())) {
-            costumer = costumerRepository.findById(obj.getCostumer().getId()).orElse(null);
-        }
-
-        order.setCostumer(costumer);
-        order.setOrderDate(obj.getOrderDate());
-        order.setOrderValue(obj.getOrderValue());
-
+        Order order = mapper.toEntity(obj, Order.class);
+        order.setId(key);
         orderRepository.save(order);
-
         return mapper.toDTO(order, OrderDTO.class);
     }
 

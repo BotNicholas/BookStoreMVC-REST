@@ -29,7 +29,6 @@ public class BookServiceImpl implements DefaultService<BookDTO, Book, Integer> {
     public List<BookDTO> findAll() {
         List<Book> books = bookRepository.findAll();
         List<BookDTO> booksDTO = books.stream().map(book -> mapper.toDTO(book, BookDTO.class)).collect(Collectors.toList());
-
         return booksDTO;
     }
 
@@ -46,28 +45,9 @@ public class BookServiceImpl implements DefaultService<BookDTO, Book, Integer> {
 
     @Override
     public BookDTO update(Integer key, BookDTO obj) {
-        Book book = bookRepository.findById(key).orElse(new Book());
-
-        Author author = book.getAuthor();
-        if (!book.getAuthor().getId().equals(obj.getAuthor().getId())) {
-            author = authorRepository.findById(obj.getAuthor().getId()).orElse(null);
-        }
-        BookCategory category = book.getCategory();
-        if (!book.getCategory().getCode().equals(obj.getCategory().getCode())) {
-            category = categoryRepository.findById(obj.getCategory().getCode()).orElse(null);
-        }
-
-        book.setAuthor(author);
-        book.setCategory(category);
-        book.setIsbn(obj.getIsbn());
-        book.setPublicationDate(obj.getPublicationDate());
-        book.setDateAcquired(obj.getDateAcquired());
-        book.setTitle(obj.getTitle());
-        book.setRecommendedPrice(obj.getRecommendedPrice());
-        book.setComments(obj.getComments());
-
+        Book book = mapper.toEntity(obj, Book.class);
+        book.setId(key);
         bookRepository.save(book);
-
         return mapper.toDTO(book, BookDTO.class);
     }
 

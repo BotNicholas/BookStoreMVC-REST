@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CostumerDTO implements DefaultDTO {
@@ -25,6 +26,7 @@ public class CostumerDTO implements DefaultDTO {
     private List<Integer> orders;
 
     public CostumerDTO() {
+        orders = new ArrayList<>();
     }
 
     public CostumerDTO(String idnp, String name, String address, String phone, String email, List<Integer> orders) {

@@ -18,32 +18,37 @@ public class OrderItemController {
     private OrderItemServiceImpl orderItemService;
 
     @GetMapping()
-    public ResponseEntity<List<OrderItemDTO>> findAll() {
-        return new ResponseEntity<>(orderItemService.findAll(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<OrderItemDTO> findAll() {
+        return orderItemService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderItemDTO> findById(@PathVariable("id") Integer id) {
-        return new ResponseEntity<>(orderItemService.findByKey(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public OrderItemDTO findById(@PathVariable("id") Integer id) {
+        return orderItemService.findByKey(id);
     }
 
     @PostMapping()
-    public ResponseEntity<String> save(@RequestBody OrderItemDTO orderItemDTO) throws UnexpectedIdException {
+    @ResponseStatus(HttpStatus.OK)
+    public String save(@RequestBody OrderItemDTO orderItemDTO) throws UnexpectedIdException {
         if (orderItemDTO.getId() != null) {
             throw new UnexpectedIdException();
         }
         orderItemService.save(orderItemDTO);
-        return new ResponseEntity<>("Save successful!", HttpStatus.OK);
+        return "Save successful!";
     }
     @PatchMapping("/{id}")
-    public ResponseEntity<String> update(@Valid @RequestBody OrderItemDTO orderItemDTO, @PathVariable("id") Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public String update(@Valid @RequestBody OrderItemDTO orderItemDTO, @PathVariable("id") Integer id) {
         orderItemService.update(id, orderItemDTO);
-        return new ResponseEntity<>("Update successful!", HttpStatus.OK);
+        return "Update successful!";
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public String delete(@PathVariable("id") Integer id) {
         orderItemService.delete(id);
-        return new ResponseEntity<>("Delete successful!", HttpStatus.OK);
+        return "Delete successful!";
     }
 }

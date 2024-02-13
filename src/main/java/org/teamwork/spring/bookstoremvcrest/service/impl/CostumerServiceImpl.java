@@ -34,22 +34,14 @@ public class CostumerServiceImpl implements DefaultService<CostumerDTO, Costumer
     @Override
     public CostumerDTO save(CostumerDTO obj) {
         Costumer costumer = costomerRepository.save(mapper.toEntity(obj, Costumer.class));
-
         return mapper.toDTO(costumer, CostumerDTO.class);
     }
 
     @Override
     public CostumerDTO update(Integer key, CostumerDTO obj) {
-        Costumer costumer = costomerRepository.findById(key).orElse(new Costumer());
-
-        costumer.setIdnp(obj.getIdnp());
-        costumer.setName(obj.getName());
-        costumer.setAddress(obj.getAddress());
-        costumer.setPhone(obj.getPhone());
-        costumer.setEmail(obj.getEmail());
-
+        Costumer costumer = mapper.toEntity(obj, Costumer.class);
+        costumer.setId(key);
         costomerRepository.save(costumer);
-
         return mapper.toDTO(costumer, CostumerDTO.class);
     }
 

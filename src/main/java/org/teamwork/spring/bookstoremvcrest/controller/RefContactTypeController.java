@@ -18,34 +18,39 @@ public class RefContactTypeController {
     private RefContactTypeServiceImpl contactTypeService;
 
     @GetMapping()
-    public ResponseEntity<List<RefContactTypeDTO>> findAll() {
-        return new ResponseEntity<>(contactTypeService.findAll(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<RefContactTypeDTO> findAll() {
+        return contactTypeService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RefContactTypeDTO> findById(@PathVariable("id") Integer id) {
-        return new ResponseEntity<>(contactTypeService.findByKey(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public RefContactTypeDTO findById(@PathVariable("id") Integer id) {
+        return contactTypeService.findByKey(id);
     }
 
-    @PostMapping
-    public ResponseEntity<String> save(@RequestBody RefContactTypeDTO refContactTypeDTO) throws UnexpectedIdException {
+    @PostMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public String save(@RequestBody RefContactTypeDTO refContactTypeDTO) throws UnexpectedIdException {
         if (refContactTypeDTO.getCode() != null) {
             throw new UnexpectedIdException();
         }
         contactTypeService.save(refContactTypeDTO);
 
-        return new ResponseEntity<>("Save successful!", HttpStatus.OK);
+        return "Save successful!";
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> update(@Valid @RequestBody RefContactTypeDTO refContactTypeDTO, @PathVariable("id") Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public String update(@Valid @RequestBody RefContactTypeDTO refContactTypeDTO, @PathVariable("id") Integer id) {
         contactTypeService.update(id, refContactTypeDTO);
-        return new ResponseEntity<>("Update successful!", HttpStatus.OK);
+        return "Update successful!";
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public String delete(@PathVariable("id") Integer id) {
         contactTypeService.delete(id);
-        return new ResponseEntity<>("Delete successful!", HttpStatus.OK);
+        return "Delete successful!";
     }
 }
