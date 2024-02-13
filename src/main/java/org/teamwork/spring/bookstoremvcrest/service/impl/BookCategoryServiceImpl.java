@@ -23,7 +23,6 @@ public class BookCategoryServiceImpl implements DefaultService<BookCategoryDTO, 
     public List<BookCategoryDTO> findAll() {
         List<BookCategory> bookCategories = bookCategoryRepository.findAll();
         List<BookCategoryDTO> bookCategoryDTOS = bookCategories.stream().map(bookCategory -> mapper.toDTO(bookCategory, BookCategoryDTO.class)).collect(Collectors.toList());
-
         return bookCategoryDTOS;
     }
 
@@ -40,13 +39,9 @@ public class BookCategoryServiceImpl implements DefaultService<BookCategoryDTO, 
 
     @Override
     public BookCategoryDTO update(Integer key, BookCategoryDTO obj) {
-        BookCategory bookCategory = bookCategoryRepository.findById(key).orElse(new BookCategory());
-
-        bookCategory.setCategoryDescription(obj.getCategoryDescription());
+        BookCategory bookCategory = mapper.toEntity(obj, BookCategory.class);
+        bookCategory.setCode(key);
         bookCategoryRepository.save(bookCategory);
-
-        bookCategoryRepository.save(bookCategory);
-
         return mapper.toDTO(bookCategory, BookCategoryDTO.class);
     }
 
