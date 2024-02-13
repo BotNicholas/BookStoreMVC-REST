@@ -6,14 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.teamwork.spring.bookstoremvcrest.exceptions.UnexpectedIdException;
-import org.teamwork.spring.bookstoremvcrest.mapper.abstraction.AbstractMapperImpl;
-import org.teamwork.spring.bookstoremvcrest.model.Author;
 import org.teamwork.spring.bookstoremvcrest.model.dto.AuthorDTO;
-import org.teamwork.spring.bookstoremvcrest.repository.AuthorRepository;
 import org.teamwork.spring.bookstoremvcrest.service.impl.AuthorServiceImpl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/authors")

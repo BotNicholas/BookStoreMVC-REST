@@ -44,6 +44,8 @@ public class OrderServiceImpl implements DefaultService<OrderDTO, Order, Integer
         order.setOrderDate(obj.getOrderDate());
         order.setOrderValue(obj.getOrderValue());
 
+        orderRepository.save(order);
+
         return mapper.toDTO(order, OrderDTO.class);
     }
 

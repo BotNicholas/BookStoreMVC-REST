@@ -44,6 +44,8 @@ public class OrderItemServiceImpl implements DefaultService<OrderItemDTO, OrderI
         orderItem.setItemAgreedPrice(obj.getItemAgreedPrice());
         orderItem.setItemComment(obj.getItemComment());
 
+        orderItemRepository.save(orderItem);
+
         return mapper.toDTO(orderItem, OrderItemDTO.class);
     }
 

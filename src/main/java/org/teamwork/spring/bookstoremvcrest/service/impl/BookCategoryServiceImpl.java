@@ -45,6 +45,8 @@ public class BookCategoryServiceImpl implements DefaultService<BookCategoryDTO, 
         bookCategory.setCode(obj.getCode());
         bookCategory.setCategoryDescription(obj.getCategoryDescription());
 
+        bookCategoryRepository.save(bookCategory);
+
         return mapper.toDTO(bookCategory, BookCategoryDTO.class);
     }
 

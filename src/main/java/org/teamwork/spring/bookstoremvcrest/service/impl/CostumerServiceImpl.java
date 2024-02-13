@@ -41,12 +41,17 @@ public class CostumerServiceImpl implements DefaultService<CostumerDTO, Costumer
     @Override
     public CostumerDTO update(Integer key, CostumerDTO obj) {
         Costumer costumer = costomerRepository.findById(key).orElse(new Costumer());
+        System.out.println(costumer.toString());
 
         costumer.setIdnp(obj.getIdnp());
         costumer.setName(obj.getName());
         costumer.setAddress(obj.getAddress());
         costumer.setPhone(obj.getPhone());
         costumer.setEmail(obj.getEmail());
+
+        System.out.println(costumer.toString());
+
+        costomerRepository.save(costumer);
 
         return mapper.toDTO(costumer, CostumerDTO.class);
     }

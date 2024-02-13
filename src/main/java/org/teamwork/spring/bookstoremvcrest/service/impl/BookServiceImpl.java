@@ -47,6 +47,8 @@ public class BookServiceImpl implements DefaultService<BookDTO, Book, Integer> {
         book.setRecommendedPrice(obj.getRecommendedPrice());
         book.setComments(obj.getComments());
 
+        bookRepository.save(book);
+
         return mapper.toDTO(book, BookDTO.class);
     }
 

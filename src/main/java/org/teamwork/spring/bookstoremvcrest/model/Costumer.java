@@ -25,7 +25,7 @@ public class Costumer {
     @Pattern(regexp = "^\\+373\\d{8}$", message = "Number must be in format +373xxxxxxxx")
     private String phone;
     @NotEmpty(message = "Specify email!")
-    @Pattern(regexp = "", message = "Email must have next pattern: example@gmail.com")
+    @Pattern(regexp = "^.+@.+\\..+$", message = "Email must have next pattern: example@gmail.com")
     private String email;
     @OneToMany(mappedBy = "costumer", cascade = {CascadeType.DETACH,
                                                  CascadeType.MERGE,

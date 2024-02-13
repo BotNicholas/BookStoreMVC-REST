@@ -20,7 +20,7 @@ public class CostumerDTO implements DefaultDTO {
     @Pattern(regexp = "^\\+373\\d{8}$", message = "Number must be in format +373xxxxxxxx")
     private String phone;
     @NotEmpty(message = "Specify email!")
-    @Pattern(regexp = "", message = "Email must have next pattern: example@gmail.com")
+    @Pattern(regexp = "^.+@.+\\..+$", message = "Email must have next pattern: example@gmail.com")
     private String email;
     private List<Integer> orders;
 

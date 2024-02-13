@@ -48,6 +48,8 @@ public class ContactServiceImpl implements DefaultService<ContactDTO, Contact, I
         contact.setCellPhone(obj.getCellPhone());
         contact.setOtherDetails(obj.getOtherDetails());
 
+        contactRepository.save(contact);
+
         return mapper.toDTO(contact, ContactDTO.class);
     }
 
