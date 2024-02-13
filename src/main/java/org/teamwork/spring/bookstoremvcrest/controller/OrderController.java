@@ -18,33 +18,38 @@ public class OrderController {
     private OrderServiceImpl orderService;
 
     @GetMapping("")
-    public ResponseEntity<List<OrderDTO>> findAll() {
-        return new ResponseEntity<>(orderService.findAll(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<OrderDTO> findAll() {
+        return orderService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderDTO> findById(@PathVariable("id") Integer id) {
-        return new ResponseEntity<>(orderService.findByKey(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public OrderDTO findById(@PathVariable("id") Integer id) {
+        return orderService.findByKey(id);
     }
 
     @PostMapping()
-    public ResponseEntity<String> save(@RequestBody OrderDTO orderDTO) throws UnexpectedIdException {
+    @ResponseStatus(HttpStatus.OK)
+    public String save(@RequestBody OrderDTO orderDTO) throws UnexpectedIdException {
         if (orderDTO.getId() != null) {
             throw new UnexpectedIdException();
         }
         orderService.save(orderDTO);
-        return new ResponseEntity<>("Save success!", HttpStatus.OK);
+        return "Save success!";
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> update(@Valid @RequestBody OrderDTO orderDTO, @PathVariable("id") Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public String update(@Valid @RequestBody OrderDTO orderDTO, @PathVariable("id") Integer id) {
         orderService.update(id, orderDTO);
-        return new ResponseEntity<>("Update successful!", HttpStatus.OK);
+        return "Update successful!";
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public String delete(@PathVariable("id") Integer id) {
         orderService.delete(id);
-        return new ResponseEntity<>("Delete successful!", HttpStatus.OK);
+        return "Delete successful!";
     }
 }

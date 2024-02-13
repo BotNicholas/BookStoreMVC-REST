@@ -18,33 +18,38 @@ public class AuthorController {
     private AuthorServiceImpl authorService;
 
     @GetMapping("")
-    public ResponseEntity<List<AuthorDTO>> findAll() {
-        return new ResponseEntity<>(authorService.findAll(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<AuthorDTO> findAll() {
+        return authorService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AuthorDTO> findById(@PathVariable("id") Integer id) {
-        return new ResponseEntity<>(authorService.findByKey(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public AuthorDTO findById(@PathVariable("id") Integer id) {
+        return authorService.findByKey(id);
     }
 
     @PostMapping("")
-    public ResponseEntity<String> save(@Valid @RequestBody AuthorDTO authorDTO) throws UnexpectedIdException {
+    @ResponseStatus(HttpStatus.OK)
+    public String save(@Valid @RequestBody AuthorDTO authorDTO) throws UnexpectedIdException {
         if (authorDTO.getId() != null) {
             throw new UnexpectedIdException();
         }
         authorService.save(authorDTO);
-        return new ResponseEntity<>("Save success!", HttpStatus.OK);
+        return "Save success!";
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> update(@Valid @RequestBody AuthorDTO authorDTO, @PathVariable Integer id) {
+    @ResponseStatus(HttpStatus.OK)
+    public String update(@Valid @RequestBody AuthorDTO authorDTO, @PathVariable Integer id) {
         authorService.update(id, authorDTO);
-        return new ResponseEntity<>("Success!", HttpStatus.OK);
+        return "Success!";
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Integer id){
+    @ResponseStatus(HttpStatus.OK)
+    public String delete(@PathVariable("id") Integer id){
         authorService.delete(id);
-        return new ResponseEntity<>("Success!", HttpStatus.OK);
+        return "Success!";
     }
 }

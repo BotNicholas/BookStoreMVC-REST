@@ -18,33 +18,38 @@ public class BookCategoryController {
     private BookCategoryServiceImpl categoryService;
 
     @GetMapping("")
-    public ResponseEntity<List<BookCategoryDTO>> findAll(){
-        return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookCategoryDTO> findAll(){
+        return categoryService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookCategoryDTO> findById(@PathVariable("id") Integer id){
-        return new ResponseEntity<>(categoryService.findByKey(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public BookCategoryDTO findById(@PathVariable("id") Integer id){
+        return categoryService.findByKey(id);
     }
 
     @PostMapping("")
-    public ResponseEntity<String> save(@Valid @RequestBody BookCategoryDTO categoryDTO) throws UnexpectedIdException {
+    @ResponseStatus(HttpStatus.OK)
+    public String save(@Valid @RequestBody BookCategoryDTO categoryDTO) throws UnexpectedIdException {
         if (categoryDTO.getCode() != null) {
             throw new UnexpectedIdException();
         }
         categoryService.save(categoryDTO);
-        return new ResponseEntity<>("Success!", HttpStatus.OK);
+        return "Success!";
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> update(@Valid @RequestBody BookCategoryDTO categoryDTO, @PathVariable("id") Integer id){
+    @ResponseStatus(HttpStatus.OK)
+    public String update(@Valid @RequestBody BookCategoryDTO categoryDTO, @PathVariable("id") Integer id){
         categoryService.update(id, categoryDTO);
-        return new ResponseEntity<>("Success!", HttpStatus.OK);
+        return "Success!";
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Integer id){
+    @ResponseStatus(HttpStatus.OK)
+    public String delete(@PathVariable("id") Integer id){
         categoryService.delete(id);
-        return new ResponseEntity<>("Success!", HttpStatus.OK);
+        return "Success!";
     }
 }

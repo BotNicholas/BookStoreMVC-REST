@@ -18,33 +18,38 @@ public class BookController {
     private BookServiceImpl bookService;
 
     @GetMapping("")
-    public ResponseEntity<List<BookDTO>> findAll(){
-        return new ResponseEntity<>(bookService.findAll(), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public List<BookDTO> findAll(){
+        return bookService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookDTO> findById(@PathVariable("id") Integer id){
-        return new ResponseEntity<>(bookService.findByKey(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public BookDTO findById(@PathVariable("id") Integer id){
+        return bookService.findByKey(id);
     }
 
     @PostMapping("")
-    public ResponseEntity<String> save(@Valid @RequestBody BookDTO bookDTO) throws UnexpectedIdException {
+    @ResponseStatus(HttpStatus.OK)
+    public String save(@Valid @RequestBody BookDTO bookDTO) throws UnexpectedIdException {
         if (bookDTO.getId() != null) {
             throw new UnexpectedIdException();
         }
         bookService.save(bookDTO);
-        return new ResponseEntity<>("Success!", HttpStatus.OK);
+        return "Success!";
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> update(@Valid @RequestBody BookDTO bookDTO, @PathVariable("id") Integer id){
+    @ResponseStatus(HttpStatus.OK)
+    public String update(@Valid @RequestBody BookDTO bookDTO, @PathVariable("id") Integer id){
         bookService.update(id, bookDTO);
-        return new ResponseEntity<>("Success!", HttpStatus.OK);
+        return "Success!";
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Integer id){
+    @ResponseStatus(HttpStatus.OK)
+    public String delete(@PathVariable("id") Integer id){
         bookService.delete(id);
-        return new ResponseEntity<>("Succsess!", HttpStatus.OK);
+        return "Succsess!";
     }
 }
