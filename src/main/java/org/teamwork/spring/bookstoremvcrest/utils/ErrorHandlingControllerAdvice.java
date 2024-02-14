@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.teamwork.spring.bookstoremvcrest.exceptions.NotFoundException;
 import org.teamwork.spring.bookstoremvcrest.exceptions.UnexpectedIdException;
 
 @RestControllerAdvice
@@ -33,6 +34,13 @@ public class ErrorHandlingControllerAdvice {
         ValidationConstraintsError error = new ValidationConstraintsError();
         error.addViolations(e.getBindingResult().getFieldErrors());
         error.setMessage("The object did not pass the validation! Violated constraints:");
+        return error;
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public NotFoundError objectNotFoundError(NotFoundException e) {
+        NotFoundError error = new NotFoundError(e.getMessage());
         return error;
     }
 }

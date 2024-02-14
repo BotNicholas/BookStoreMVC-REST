@@ -27,7 +27,7 @@ public class AuthorServiceImpl implements DefaultService<AuthorDTO, Author, Inte
 
     @Override
     public AuthorDTO findByKey(Integer key) {
-        return mapper.toDTO(authorRepository.findById(key).get(), AuthorDTO.class);
+        return mapper.toDTO(authorRepository.findById(key).orElse(null), AuthorDTO.class);
     }
 
     @Override

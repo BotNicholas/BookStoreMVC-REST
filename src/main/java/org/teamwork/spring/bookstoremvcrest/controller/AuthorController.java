@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.teamwork.spring.bookstoremvcrest.exceptions.NotFoundException;
 import org.teamwork.spring.bookstoremvcrest.exceptions.UnexpectedIdException;
 import org.teamwork.spring.bookstoremvcrest.model.dto.AuthorDTO;
 import org.teamwork.spring.bookstoremvcrest.service.impl.AuthorServiceImpl;
@@ -23,12 +24,17 @@ public class AuthorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AuthorDTO> findById(@PathVariable("id") Integer id) {
-        return new ResponseEntity<>(authorService.findByKey(id), HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    public AuthorDTO findById(@PathVariable("id") Integer id) throws NotFoundException {
+        AuthorDTO authorDTO = authorService.findByKey(id);
+        if (authorDTO == null) {
+            throw new NotFoundException();
+        }
+        return authorDTO;
     }
 
     @PostMapping("")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public String save(@Valid @RequestBody AuthorDTO authorDTO) throws UnexpectedIdException {
         if (authorDTO.getId() != null) {
             throw new UnexpectedIdException();
