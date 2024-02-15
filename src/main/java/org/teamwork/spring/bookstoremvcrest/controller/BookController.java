@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.teamwork.spring.bookstoremvcrest.exceptions.NotFoundException;
 import org.teamwork.spring.bookstoremvcrest.exceptions.UnexpectedIdException;
 import org.teamwork.spring.bookstoremvcrest.model.dto.BookDTO;
 import org.teamwork.spring.bookstoremvcrest.service.impl.BookServiceImpl;
@@ -25,12 +26,16 @@ public class BookController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BookDTO findById(@PathVariable("id") Integer id){
-        return bookService.findByKey(id);
+    public BookDTO findById(@PathVariable("id") Integer id) throws NotFoundException {
+        BookDTO bookDTO = bookService.findByKey(id);
+        if (bookDTO == null) {
+            throw new NotFoundException();
+        }
+        return bookDTO;
     }
 
     @PostMapping("")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public String save(@Valid @RequestBody BookDTO bookDTO) throws UnexpectedIdException {
         if (bookDTO.getId() != null) {
             throw new UnexpectedIdException();
@@ -47,7 +52,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String delete(@PathVariable("id") Integer id){
         bookService.delete(id);
         return "Succsess!";

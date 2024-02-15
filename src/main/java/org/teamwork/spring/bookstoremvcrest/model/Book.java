@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -29,10 +30,10 @@ public class Book {
     private String isbn;
     @NotNull(message = "Publication date must be specified!")
     @Column(name = "publication_date")
-    private Date publicationDate;
+    private LocalDate publicationDate;
     @NotNull(message = "Acquiring date must be specified!")
     @Column(name = "date_aquired")
-    private Date dateAcquired;
+    private LocalDate dateAcquired;
     @NotEmpty(message = "Specify the title!")
     private String title;
     @Min(value = 0, message = "Price must be > than 0")
@@ -43,7 +44,7 @@ public class Book {
     public Book() {
     }
 
-    public Book(Author author, BookCategory category, String isbn, Date publicationDate, Date dateAcquired, String title, Double recommendedPrice, String comments) {
+    public Book(Author author, BookCategory category, String isbn, LocalDate publicationDate, LocalDate dateAcquired, String title, Double recommendedPrice, String comments) {
         this.author = author;
         this.category = category;
         this.isbn = isbn;
@@ -86,19 +87,19 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public Date getPublicationDate() {
+    public LocalDate getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(Date publicationDate) {
+    public void setPublicationDate(LocalDate publicationDate) {
         this.publicationDate = publicationDate;
     }
 
-    public Date getDateAcquired() {
+    public LocalDate getDateAcquired() {
         return dateAcquired;
     }
 
-    public void setDateAcquired(Date dateAcquired) {
+    public void setDateAcquired(LocalDate dateAcquired) {
         this.dateAcquired = dateAcquired;
     }
 

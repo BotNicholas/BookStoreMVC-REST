@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.teamwork.spring.bookstoremvcrest.exceptions.NotFoundException;
 import org.teamwork.spring.bookstoremvcrest.exceptions.UnexpectedIdException;
 import org.teamwork.spring.bookstoremvcrest.model.dto.RefContactTypeDTO;
 import org.teamwork.spring.bookstoremvcrest.service.impl.RefContactTypeServiceImpl;
@@ -25,7 +26,11 @@ public class RefContactTypeController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public RefContactTypeDTO findById(@PathVariable("id") Integer id) {
+    public RefContactTypeDTO findById(@PathVariable("id") Integer id) throws NotFoundException {
+        RefContactTypeDTO refContactTypeDTO = contactTypeService.findByKey(id);
+        if (refContactTypeDTO == null) {
+            throw new NotFoundException();
+        }
         return contactTypeService.findByKey(id);
     }
 
@@ -48,7 +53,7 @@ public class RefContactTypeController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String delete(@PathVariable("id") Integer id) {
         contactTypeService.delete(id);
         return "Delete successful!";

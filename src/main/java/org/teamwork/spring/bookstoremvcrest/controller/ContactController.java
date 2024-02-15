@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.teamwork.spring.bookstoremvcrest.exceptions.NotFoundException;
 import org.teamwork.spring.bookstoremvcrest.exceptions.UnexpectedIdException;
 import org.teamwork.spring.bookstoremvcrest.model.dto.ContactDTO;
 import org.teamwork.spring.bookstoremvcrest.service.impl.ContactServiceImpl;
@@ -25,12 +26,16 @@ public class ContactController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ContactDTO findById(@PathVariable("id") Integer id){
-        return contactService.findByKey(id);
+    public ContactDTO findById(@PathVariable("id") Integer id) throws NotFoundException {
+        ContactDTO contactDTO = contactService.findByKey(id);
+        if (contactDTO == null) {
+            throw new NotFoundException();
+        }
+        return contactDTO;
     }
 
     @PostMapping("")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public String save(@Valid @RequestBody ContactDTO contactDTO) throws UnexpectedIdException {
         if (contactDTO.getId() != null) {
             throw  new UnexpectedIdException();
@@ -47,7 +52,7 @@ public class ContactController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String delete(@PathVariable("id") Integer id){
         contactService.delete(id);
         return "Success!";

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.teamwork.spring.bookstoremvcrest.exceptions.NotFoundException;
 import org.teamwork.spring.bookstoremvcrest.exceptions.UnexpectedIdException;
 import org.teamwork.spring.bookstoremvcrest.model.dto.BookCategoryDTO;
 import org.teamwork.spring.bookstoremvcrest.service.impl.BookCategoryServiceImpl;
@@ -25,12 +26,16 @@ public class BookCategoryController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BookCategoryDTO findById(@PathVariable("id") Integer id){
-        return categoryService.findByKey(id);
+    public BookCategoryDTO findById(@PathVariable("id") Integer id) throws NotFoundException {
+        BookCategoryDTO bookCategoryDTO = categoryService.findByKey(id);
+        if (bookCategoryDTO == null) {
+            throw new NotFoundException();
+        }
+        return bookCategoryDTO;
     }
 
     @PostMapping("")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public String save(@Valid @RequestBody BookCategoryDTO categoryDTO) throws UnexpectedIdException {
         if (categoryDTO.getCode() != null) {
             throw new UnexpectedIdException();
@@ -47,7 +52,7 @@ public class BookCategoryController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String delete(@PathVariable("id") Integer id){
         categoryService.delete(id);
         return "Success!";

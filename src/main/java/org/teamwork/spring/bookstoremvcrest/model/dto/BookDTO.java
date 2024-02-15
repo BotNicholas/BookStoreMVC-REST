@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class BookDTO implements DefaultDTO {
@@ -19,9 +20,9 @@ public class BookDTO implements DefaultDTO {
     @Length(min = 17, max = 17)
     private String isbn;
     @NotNull(message = "Publication date must be specified!")
-    private Date publicationDate;
+    private LocalDate publicationDate;
     @NotNull(message = "Acquiring date must be specified!")
-    private Date dateAcquired;
+    private LocalDate dateAcquired;
     @NotEmpty(message = "Specify the title!")
     private String title;
     @Min(value = 0, message = "Price must be > than 0")
@@ -31,7 +32,7 @@ public class BookDTO implements DefaultDTO {
     public BookDTO() {
     }
 
-    public BookDTO(AuthorDTO author, BookCategoryDTO category, String isbn, Date publicationDate, Date dateAcquired, String title, Double recommendedPrice, String comments) {
+    public BookDTO(AuthorDTO author, BookCategoryDTO category, String isbn, LocalDate publicationDate, LocalDate dateAcquired, String title, Double recommendedPrice, String comments) {
         this.author = author;
         this.category = category;
         this.isbn = isbn;
@@ -74,19 +75,19 @@ public class BookDTO implements DefaultDTO {
         this.isbn = isbn;
     }
 
-    public Date getPublicationDate() {
+    public LocalDate getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(Date publicationDate) {
+    public void setPublicationDate(LocalDate publicationDate) {
         this.publicationDate = publicationDate;
     }
 
-    public Date getDateAcquired() {
+    public LocalDate getDateAcquired() {
         return dateAcquired;
     }
 
-    public void setDateAcquired(Date dateAcquired) {
+    public void setDateAcquired(LocalDate dateAcquired) {
         this.dateAcquired = dateAcquired;
     }
 

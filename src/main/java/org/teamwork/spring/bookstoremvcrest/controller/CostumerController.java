@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.teamwork.spring.bookstoremvcrest.exceptions.NotFoundException;
 import org.teamwork.spring.bookstoremvcrest.exceptions.UnexpectedIdException;
 import org.teamwork.spring.bookstoremvcrest.model.dto.CostumerDTO;
 import org.teamwork.spring.bookstoremvcrest.service.impl.CostumerServiceImpl;
@@ -25,12 +26,16 @@ public class CostumerController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CostumerDTO findById(@PathVariable("id") Integer id) {
+    public CostumerDTO findById(@PathVariable("id") Integer id) throws NotFoundException {
+        CostumerDTO costumerDTO = costumerService.findByKey(id);
+        if (costumerDTO == null) {
+            throw new NotFoundException();
+        }
         return costumerService.findByKey(id);
     }
 
     @PostMapping("")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public String save(@RequestBody CostumerDTO costumerDTO) throws UnexpectedIdException {
         if (costumerDTO.getId() != null) {
             throw new UnexpectedIdException();
@@ -47,7 +52,7 @@ public class CostumerController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     private String delete(@PathVariable("id") Integer id) {
         costumerService.delete(id);
         return "Success!";

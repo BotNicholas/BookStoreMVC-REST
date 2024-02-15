@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.teamwork.spring.bookstoremvcrest.exceptions.NotFoundException;
 import org.teamwork.spring.bookstoremvcrest.exceptions.UnexpectedIdException;
 import org.teamwork.spring.bookstoremvcrest.model.dto.OrderItemDTO;
 import org.teamwork.spring.bookstoremvcrest.service.impl.OrderItemServiceImpl;
@@ -25,7 +26,11 @@ public class OrderItemController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public OrderItemDTO findById(@PathVariable("id") Integer id) {
+    public OrderItemDTO findById(@PathVariable("id") Integer id) throws NotFoundException {
+        OrderItemDTO orderItemDTO = orderItemService.findByKey(id);
+        if (orderItemDTO == null) {
+            throw new NotFoundException();
+        }
         return orderItemService.findByKey(id);
     }
 
@@ -46,7 +51,7 @@ public class OrderItemController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String delete(@PathVariable("id") Integer id) {
         orderItemService.delete(id);
         return "Delete successful!";

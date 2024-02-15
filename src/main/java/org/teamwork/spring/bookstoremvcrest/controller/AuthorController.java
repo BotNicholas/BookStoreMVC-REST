@@ -50,8 +50,9 @@ public class AuthorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Integer id){
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public String delete(@PathVariable("id") Integer id){
         authorService.delete(id);
-        return new ResponseEntity<>("Success!", HttpStatus.OK);
+        return "Deleted successful!";
     }
 }
