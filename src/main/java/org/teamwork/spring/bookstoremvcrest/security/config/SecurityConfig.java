@@ -7,27 +7,15 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder){
-        UserDetails user = User.builder().username("user").password(encoder.encode("password")).roles("USER").build();
-        UserDetails manager = User.builder().username("manager").password(encoder.encode("password")).roles("MANAGER").build();
-        UserDetails admin = User.builder().username("admin").password(encoder.encode("password")).roles("ADMIN").build();
-
-        return new InMemoryUserDetailsManager(user, manager, admin);
-    }
-
+    //By Default DaoAuthenticationProvider is used (it uses UserDetailsService and Password Encoder)
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
         security.cors(AbstractHttpConfigurer::disable);

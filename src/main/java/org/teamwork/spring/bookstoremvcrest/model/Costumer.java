@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -34,6 +36,21 @@ public class Costumer {
     private List<Order> orders;
 
     public Costumer() {
+        name = "unset";
+        idnp = "0000000000000";
+        address = "unset";
+        phone = "+37300000000";
+        email = "#unset#@gmail.com";
+        orders = new ArrayList<>();
+    }
+
+    public Costumer(String name){
+        idnp = "0000000000000";
+        address = "unset";
+        phone = "+37300000000";
+        email = "#unset#@gmail.com";
+        this.name = name;
+        orders = new ArrayList<>();
     }
 
     public Costumer(String idnp, String name, String address, String phone, String email) {
@@ -42,6 +59,7 @@ public class Costumer {
         this.address = address;
         this.phone = phone;
         this.email = email;
+        orders = new ArrayList<>();
     }
 
     public Integer getId() {
