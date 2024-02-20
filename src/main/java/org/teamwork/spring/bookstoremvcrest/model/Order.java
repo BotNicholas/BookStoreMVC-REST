@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,12 +28,14 @@ public class Order {
     private List<OrderItem> itemList;
 
     public Order() {
+        itemList = new ArrayList<>();
     }
 
     public Order(Costumer costumer, Date orderDate, Double orderValue) {
         this.costumer = costumer;
         this.orderDate = orderDate;
         this.orderValue = orderValue;
+        itemList = new ArrayList<>();
     }
 
     public Integer getId() {

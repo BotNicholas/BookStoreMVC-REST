@@ -3,7 +3,7 @@ package org.teamwork.spring.bookstoremvcrest.controller;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.teamwork.spring.bookstoremvcrest.exceptions.UnexpectedIdException;
 import org.teamwork.spring.bookstoremvcrest.model.dto.RefContactTypeDTO;
@@ -18,18 +18,21 @@ public class RefContactTypeController {
     private RefContactTypeServiceImpl contactTypeService;
 
     @GetMapping()
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public List<RefContactTypeDTO> findAll() {
         return contactTypeService.findAll();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public RefContactTypeDTO findById(@PathVariable("id") Integer id) {
         return contactTypeService.findByKey(id);
     }
 
     @PostMapping()
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public String save(@RequestBody RefContactTypeDTO refContactTypeDTO) throws UnexpectedIdException {
         if (refContactTypeDTO.getCode() != null) {
@@ -41,6 +44,7 @@ public class RefContactTypeController {
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public String update(@Valid @RequestBody RefContactTypeDTO refContactTypeDTO, @PathVariable("id") Integer id) {
         contactTypeService.update(id, refContactTypeDTO);
@@ -48,6 +52,7 @@ public class RefContactTypeController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public String delete(@PathVariable("id") Integer id) {
         contactTypeService.delete(id);

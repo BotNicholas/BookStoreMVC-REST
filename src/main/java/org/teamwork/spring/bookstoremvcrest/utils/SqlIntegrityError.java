@@ -1,11 +1,13 @@
 package org.teamwork.spring.bookstoremvcrest.utils;
 
-public class UsedIdError {
+public class SqlIntegrityError {
     private String message;
 
-    public UsedIdError() {
-        this.message = "This identifier is already used, therefore such object is already present." +
-                "Use update to modify it.";
+    public SqlIntegrityError() {
+    }
+
+    public SqlIntegrityError(String message) {
+        this.message = message;
     }
 
     public String getMessage() {

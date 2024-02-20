@@ -53,6 +53,7 @@ public class BookStoreUserServiceImpl implements DefaultService<BookStoreUserDTO
         BookStoreUser user = mapper.toEntity(obj, BookStoreUser.class);
         user.setId(key);
         repository.save(user);
+        costumerRepository.save(user.getCostumer());//
         return mapper.toDTO(user, BookStoreUserDTO.class);
     }
 
@@ -61,11 +62,16 @@ public class BookStoreUserServiceImpl implements DefaultService<BookStoreUserDTO
         BookStoreUser updatedUser = mapper.toEntity(obj, BookStoreUser.class);
         updatedUser.setId(user.getId());
         repository.save(updatedUser);
+        costumerRepository.save(updatedUser.getCostumer());//
         return mapper.toDTO(updatedUser, BookStoreUserDTO.class);
     }
 
     @Override
     public void delete(Integer key) {
+        BookStoreUser user = repository.findById(key).orElseThrow(() -> new IllegalArgumentException("Such user does no exist!"));
+        //Delete user
         repository.deleteById(key);
+        //Delete iss Costumer
+        costumerRepository.deleteById(user.getCostumer().getId());
     }
 }

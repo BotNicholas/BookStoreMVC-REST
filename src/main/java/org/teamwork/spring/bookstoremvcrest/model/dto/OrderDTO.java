@@ -3,6 +3,7 @@ package org.teamwork.spring.bookstoremvcrest.model.dto;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class OrderDTO implements DefaultDTO {
     private List<Integer> itemList;
 
     public OrderDTO() {
+        itemList = new ArrayList<>();
     }
 
     public OrderDTO(CostumerDTO customer, Date orderDate, Double orderValue, List<Integer> itemList) {

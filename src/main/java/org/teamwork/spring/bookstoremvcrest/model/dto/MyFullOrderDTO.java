@@ -1,26 +1,26 @@
-package org.teamwork.spring.bookstoremvcrest.security.model.dto;
+package org.teamwork.spring.bookstoremvcrest.model.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import org.teamwork.spring.bookstoremvcrest.model.dto.CostumerDTO;
-import org.teamwork.spring.bookstoremvcrest.model.dto.DefaultDTO;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MyOrderDTO implements DefaultDTO {
+public class MyFullOrderDTO {
     private Integer id;
     private CostumerDTO customer;
     @NotNull(message = "Specify order date")
     private Date orderDate;
     @Min(value = 1, message = "Minimal value is 1")
     private Double orderValue;
-    private List<Integer> itemList;
+    private List<LightOrderItemDTO> itemList;
 
-    public MyOrderDTO() {
+    public MyFullOrderDTO() {
+        itemList = new ArrayList<>();
     }
 
-    public MyOrderDTO(CostumerDTO customer, Date orderDate, Double orderValue, List<Integer> itemList) {
+    public MyFullOrderDTO(CostumerDTO customer, Date orderDate, Double orderValue, List<LightOrderItemDTO> itemList) {
         this.customer = customer;
         this.orderDate = orderDate;
         this.orderValue = orderValue;
@@ -59,11 +59,11 @@ public class MyOrderDTO implements DefaultDTO {
         this.orderValue = orderValue;
     }
 
-    public List<Integer> getItemList() {
+    public List<LightOrderItemDTO> getItemList() {
         return itemList;
     }
 
-    public void setItemList(List<Integer> itemList) {
+    public void setItemList(List<LightOrderItemDTO> itemList) {
         this.itemList = itemList;
     }
 
