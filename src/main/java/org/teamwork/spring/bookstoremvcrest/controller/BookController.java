@@ -3,7 +3,7 @@ package org.teamwork.spring.bookstoremvcrest.controller;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.teamwork.spring.bookstoremvcrest.exceptions.NotFoundException;
 import org.teamwork.spring.bookstoremvcrest.exceptions.UnexpectedIdException;
@@ -19,12 +19,14 @@ public class BookController {
     private BookServiceImpl bookService;
 
     @GetMapping("")
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER', 'ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public List<BookDTO> findAll(){
         return bookService.findAll();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER', 'ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public BookDTO findById(@PathVariable("id") Integer id) throws NotFoundException {
         BookDTO bookDTO = bookService.findByKey(id);
@@ -35,6 +37,7 @@ public class BookController {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public String save(@Valid @RequestBody BookDTO bookDTO) throws UnexpectedIdException {
         if (bookDTO.getId() != null) {
@@ -45,6 +48,7 @@ public class BookController {
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public String update(@Valid @RequestBody BookDTO bookDTO, @PathVariable("id") Integer id){
         bookService.update(id, bookDTO);
@@ -52,7 +56,8 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.OK)
     public String delete(@PathVariable("id") Integer id){
         bookService.delete(id);
         return "Succsess!";

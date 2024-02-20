@@ -3,7 +3,7 @@ package org.teamwork.spring.bookstoremvcrest.controller;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.teamwork.spring.bookstoremvcrest.exceptions.NotFoundException;
 import org.teamwork.spring.bookstoremvcrest.exceptions.UnexpectedIdException;
@@ -19,12 +19,14 @@ public class ContactController {
     private ContactServiceImpl contactService;
 
     @GetMapping("")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public List<ContactDTO> findAll(){
         return contactService.findAll();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public ContactDTO findById(@PathVariable("id") Integer id) throws NotFoundException {
         ContactDTO contactDTO = contactService.findByKey(id);
@@ -35,6 +37,7 @@ public class ContactController {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public String save(@Valid @RequestBody ContactDTO contactDTO) throws UnexpectedIdException {
         if (contactDTO.getId() != null) {
@@ -45,6 +48,7 @@ public class ContactController {
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public String update(@Valid @RequestBody ContactDTO contactDTO, @PathVariable("id") Integer id){
         contactService.update(id, contactDTO);
@@ -52,7 +56,8 @@ public class ContactController {
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.OK)
     public String delete(@PathVariable("id") Integer id){
         contactService.delete(id);
         return "Success!";

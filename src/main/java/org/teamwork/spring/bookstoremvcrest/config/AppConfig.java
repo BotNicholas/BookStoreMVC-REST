@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.teamwork.spring.bookstoremvcrest.model.*;
 import org.teamwork.spring.bookstoremvcrest.model.dto.AuthorDTO;
 import org.teamwork.spring.bookstoremvcrest.model.dto.CostumerDTO;
+import org.teamwork.spring.bookstoremvcrest.model.dto.LightOrderItemDTO;
 import org.teamwork.spring.bookstoremvcrest.model.dto.OrderDTO;
 import org.teamwork.spring.bookstoremvcrest.repository.BookRepository;
 import org.teamwork.spring.bookstoremvcrest.repository.OrderItemRepository;
@@ -45,6 +46,7 @@ public class AppConfig {
         authorsCustomMapper(mapper);
         customerCustomMapper(mapper);
         orderCustomMapper(mapper);
+        lightOrderItemCustomMapper(mapper);
     }
 
     private void authorsCustomMapper(ModelMapper mapper){
@@ -87,5 +89,19 @@ public class AppConfig {
             List<Integer> orderItemsId = context.getSource();
             return orderItemsId.stream().map(orderItemId -> orderItemRepository.findById(orderItemId).orElse(null)).collect(Collectors.toList());
         }).map(OrderDTO::getItemList, Order::setItemList));
+    }
+
+    private void lightOrderItemCustomMapper(ModelMapper mapper){
+        //to DTO
+        mapper.typeMap(OrderItem.class, LightOrderItemDTO.class).addMappings(mapping -> mapping.using((MappingContext<Book, Integer> context) -> {
+            Book book = context.getSource();
+            return book.getId();
+        }).map(OrderItem::getBook, LightOrderItemDTO::setBook));
+
+        //from DTO
+        mapper.typeMap(LightOrderItemDTO.class, OrderItem.class).addMappings(mapping -> mapping.using((MappingContext<Integer, Book> context) -> {
+            Integer bookId = context.getSource();
+            return bookRepository.findById(bookId).orElseThrow(() -> new IllegalArgumentException("Such book was not found!"));
+        }).map(LightOrderItemDTO::getBook, OrderItem::setBook));
     }
 }

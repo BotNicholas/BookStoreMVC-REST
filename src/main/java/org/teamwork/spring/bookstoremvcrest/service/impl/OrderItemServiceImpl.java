@@ -1,12 +1,9 @@
 package org.teamwork.spring.bookstoremvcrest.service.impl;
 
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.teamwork.spring.bookstoremvcrest.mapper.abstraction.AbstractMapper;
-import org.teamwork.spring.bookstoremvcrest.model.Book;
 import org.teamwork.spring.bookstoremvcrest.model.Costumer;
-import org.teamwork.spring.bookstoremvcrest.model.Order;
 import org.teamwork.spring.bookstoremvcrest.model.OrderItem;
 import org.teamwork.spring.bookstoremvcrest.model.dto.OrderItemDTO;
 import org.teamwork.spring.bookstoremvcrest.repository.BookRepository;
@@ -37,6 +34,12 @@ public class OrderItemServiceImpl implements DefaultService<OrderItemDTO, OrderI
     @Override
     public OrderItemDTO findByKey(Integer key) {
         return mapper.toDTO(orderItemRepository.findById(key), OrderItemDTO.class);
+    }
+
+    public List<OrderItemDTO> findAllByCostumer(Costumer costumer){
+        List<OrderItem> orderItems = orderItemRepository.findAllByOrder_Costumer(costumer);
+        List<OrderItemDTO> orderItemDTOS = orderItems.stream().map(orderItem -> mapper.toDTO(orderItem, OrderItemDTO.class)).collect(Collectors.toList());
+        return orderItemDTOS;
     }
 
     @Override
