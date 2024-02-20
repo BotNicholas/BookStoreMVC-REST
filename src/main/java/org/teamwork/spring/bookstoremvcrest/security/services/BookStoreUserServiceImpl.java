@@ -7,6 +7,7 @@ import org.teamwork.spring.bookstoremvcrest.mapper.abstraction.AbstractMapperImp
 import org.teamwork.spring.bookstoremvcrest.model.Costumer;
 import org.teamwork.spring.bookstoremvcrest.repository.CostumerRepository;
 import org.teamwork.spring.bookstoremvcrest.security.model.BookStoreUser;
+import org.teamwork.spring.bookstoremvcrest.security.model.dto.BookStoreRegistrationUserDTO;
 import org.teamwork.spring.bookstoremvcrest.security.model.dto.BookStoreUserDTO;
 import org.teamwork.spring.bookstoremvcrest.security.repositories.BookStoreUserRepository;
 import org.teamwork.spring.bookstoremvcrest.service.DefaultService;
@@ -37,15 +38,25 @@ public class BookStoreUserServiceImpl implements DefaultService<BookStoreUserDTO
         return mapper.toDTO(repository.findByUsername(username), BookStoreUserDTO.class);
     }
 
-    @Override
-    public BookStoreUserDTO save(BookStoreUserDTO obj) {
-        BookStoreUser user = mapper.toEntity(obj, BookStoreUser.class);
+    private BookStoreUserDTO save(BookStoreUser user){
         if (user.getCostumer() == null) {
             Costumer costumerForUser = costumerRepository.save(new Costumer(user.getUsername())); //creating empty costumer for new user
             user.setCostumer(costumerForUser);
         }
         user = repository.save(user);
         return mapper.toDTO(user, BookStoreUserDTO.class);
+    }
+
+    @Override
+    public BookStoreUserDTO save(BookStoreUserDTO obj) {
+        BookStoreUser user = mapper.toEntity(obj, BookStoreUser.class);
+        return save(user);
+    }
+
+    public BookStoreUserDTO register(BookStoreRegistrationUserDTO registrationUserDTO){
+        BookStoreUser bookStoreUser = mapper.toEntity(registrationUserDTO, BookStoreUser.class);
+        bookStoreUser.setRoles("ROLE_USER"); //setting default Role
+        return save(bookStoreUser);
     }
 
     @Override
