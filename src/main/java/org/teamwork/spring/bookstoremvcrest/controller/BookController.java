@@ -57,7 +57,7 @@ public class BookController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String delete(@PathVariable("id") Integer id){
         bookService.delete(id);
         return "Succsess!";

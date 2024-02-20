@@ -63,7 +63,7 @@ public class AuthorController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String delete(@PathVariable("id") Integer id){
         authorService.delete(id);
         return "Deleted successful!";

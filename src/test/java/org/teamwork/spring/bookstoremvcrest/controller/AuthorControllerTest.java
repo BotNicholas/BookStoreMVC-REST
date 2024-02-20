@@ -1,6 +1,7 @@
 package org.teamwork.spring.bookstoremvcrest.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.With;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.teamwork.spring.bookstoremvcrest.model.dto.AuthorDTO;
 import org.teamwork.spring.bookstoremvcrest.service.impl.AuthorServiceImpl;
@@ -23,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 @AutoConfigureMockMvc(addFilters = false)
 @SpringBootTest
+@WithMockUser(username = "admin", roles = "ADMIN")
 public class AuthorControllerTest {
     @Autowired
     private MockMvc mockMvc;
