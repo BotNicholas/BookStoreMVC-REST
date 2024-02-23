@@ -8,6 +8,10 @@ public class UsedIdError {
                 "Use update to modify it.";
     }
 
+    public UsedIdError(String message) {
+        this.message = message;
+    }
+
     public String getMessage() {
         return message;
     }

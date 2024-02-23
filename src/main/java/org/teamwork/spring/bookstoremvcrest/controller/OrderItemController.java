@@ -43,13 +43,14 @@ public class OrderItemController {
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public String save(@RequestBody OrderItemDTO orderItemDTO) throws UnexpectedIdException {
+    public String save(@Valid @RequestBody OrderItemDTO orderItemDTO) throws UnexpectedIdException {
         if (orderItemDTO.getId() != null) {
             throw new UnexpectedIdException();
         }
         orderItemService.save(orderItemDTO);
         return "Save successful!";
     }
+
     @PatchMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
@@ -60,7 +61,7 @@ public class OrderItemController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String delete(@PathVariable("id") Integer id) {
         orderItemService.delete(id);
         return "Delete successful!";

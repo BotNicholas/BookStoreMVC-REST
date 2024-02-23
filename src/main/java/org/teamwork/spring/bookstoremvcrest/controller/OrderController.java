@@ -32,8 +32,12 @@ public class OrderController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public FullOrderDTO findById(@PathVariable("id") Integer id){
-        return service.findByKey(id);
+    public FullOrderDTO findById(@PathVariable("id") Integer id) throws NotFoundException {
+        FullOrderDTO fullOrderDTO = service.findByKey(id);
+        if (fullOrderDTO == null) {
+            throw new NotFoundException();
+        }
+        return fullOrderDTO;
     }
 
     @PostMapping("")
@@ -62,10 +66,10 @@ public class OrderController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String delete(@PathVariable("id") Integer id) {
         service.delete(id);
-        return "Success!";
+        return "Delete successful!";
     }
 
 

@@ -3,6 +3,7 @@ package org.teamwork.spring.bookstoremvcrest.security.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.teamwork.spring.bookstoremvcrest.exceptions.NotFoundException;
 import org.teamwork.spring.bookstoremvcrest.mapper.abstraction.AbstractMapperImpl;
 import org.teamwork.spring.bookstoremvcrest.model.Costumer;
 import org.teamwork.spring.bookstoremvcrest.repository.CostumerRepository;
@@ -31,7 +32,7 @@ public class BookStoreUserServiceImpl implements DefaultService<BookStoreUserDTO
 
     @Override
     public BookStoreUserDTO findByKey(Integer key) {
-        return mapper.toDTO(repository.findById(key), BookStoreUserDTO.class);
+        return mapper.toDTO(repository.findById(key).orElseThrow(null), BookStoreUserDTO.class);
     }
 
     public BookStoreUserDTO findByUsername(String username) {

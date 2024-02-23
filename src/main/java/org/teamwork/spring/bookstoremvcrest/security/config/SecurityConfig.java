@@ -21,7 +21,7 @@ public class SecurityConfig {
         security.cors(AbstractHttpConfigurer::disable);
         security.csrf(AbstractHttpConfigurer::disable);
         security.authorizeHttpRequests(request -> request.requestMatchers("/").permitAll());
-        security.authorizeHttpRequests(request -> request.requestMatchers("/register").permitAll());
+        security.authorizeHttpRequests(request -> request.requestMatchers("/users/register").permitAll());
         security.authorizeHttpRequests(request -> request.requestMatchers("/**").authenticated());
         //Add form based Authentication
         security.formLogin(form -> form.permitAll());

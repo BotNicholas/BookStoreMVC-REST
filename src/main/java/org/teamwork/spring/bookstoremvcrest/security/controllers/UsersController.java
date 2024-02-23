@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.teamwork.spring.bookstoremvcrest.exceptions.NotFoundException;
 import org.teamwork.spring.bookstoremvcrest.exceptions.UnexpectedIdException;
 import org.teamwork.spring.bookstoremvcrest.security.model.dto.BookStoreRegistrationUserDTO;
 import org.teamwork.spring.bookstoremvcrest.security.model.dto.BookStoreUserDTO;
@@ -32,8 +33,12 @@ public class UsersController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public BookStoreUserDTO findById(@PathVariable("id") Integer id){
-        return service.findByKey(id);
+    public BookStoreUserDTO findById(@PathVariable("id") Integer id) throws NotFoundException {
+        BookStoreUserDTO userDTO =  service.findByKey(id);
+        if (userDTO == null) {
+            throw new NotFoundException("Such user was not found!");
+        }
+        return userDTO;
     }
 
     @PostMapping("")
@@ -43,6 +48,7 @@ public class UsersController {
         if (bookStoreUserDTO.getId() != null) {
             throw new UnexpectedIdException("Id is unexpected for User");
         }
+        bookStoreUserDTO.setPassword(encoder.encode(bookStoreUserDTO.getPassword()));
         service.save(bookStoreUserDTO);
         return "Success!";
     }
@@ -57,10 +63,10 @@ public class UsersController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String delete(@PathVariable("id") Integer id){
         service.delete(id);
-        return "Success!";
+        return "Delete successful!";
     }
 
     @PostMapping("/register")

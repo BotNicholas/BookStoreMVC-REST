@@ -38,11 +38,20 @@ public class CostumerDTO implements DefaultDTO {
         this.orders = orders;
     }
 
+    public CostumerDTO(Integer id, String idnp, String name, String address, String phone, String email) {
+        this.id = id;
+        this.idnp = idnp;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+    }
+
     public Integer getId() {
         return id;
     }
 
-    private void setId(Integer id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -62,6 +62,15 @@ public class Costumer {
         orders = new ArrayList<>();
     }
 
+    public Costumer(Integer id, String idnp, String name, String address, String phone, String email) {
+        this.id = id;
+        this.idnp = idnp;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -18,7 +18,7 @@ public class RefContactTypeDTO implements DefaultDTO {
         return code;
     }
 
-    private void setCode(Integer code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 

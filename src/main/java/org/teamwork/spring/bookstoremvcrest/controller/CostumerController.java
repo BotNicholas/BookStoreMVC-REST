@@ -41,7 +41,7 @@ public class CostumerController {
     @PostMapping("")
     @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public String save(@RequestBody CostumerDTO costumerDTO) throws UnexpectedIdException {
+    public String save(@Valid @RequestBody CostumerDTO costumerDTO) throws UnexpectedIdException {
         if (costumerDTO.getId() != null) {
             throw new UnexpectedIdException();
         }
@@ -59,10 +59,10 @@ public class CostumerController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String delete(@PathVariable("id") Integer id) {
         costumerService.delete(id);
-        return "Success!";
+        return "Delete successful!";
     }
 
 
@@ -75,12 +75,12 @@ public class CostumerController {
         return costumerService.findByKey(userDetails.getUser().getCostumer().getId());
     }
 
-    @PatchMapping("/me")
-//    @PreAuthorize("hasRole('USER')")
-    @ResponseStatus(HttpStatus.OK)
-    public String updateMe(Authentication authentication, @Valid @RequestBody CostumerDTO costumerDTO) {
-        BookStoreUserDetails user = (BookStoreUserDetails) authentication.getPrincipal();
-        costumerService.update(user.getUser().getCostumer().getId(), costumerDTO);
-        return "Success!";
-    }
+        @PatchMapping("/me")
+    //    @PreAuthorize("hasRole('USER')")
+        @ResponseStatus(HttpStatus.OK)
+        public String updateMe(Authentication authentication, @Valid @RequestBody CostumerDTO costumerDTO) {
+            BookStoreUserDetails user = (BookStoreUserDetails) authentication.getPrincipal();
+            costumerService.update(user.getUser().getCostumer().getId(), costumerDTO);
+            return "Success!";
+        }
 }

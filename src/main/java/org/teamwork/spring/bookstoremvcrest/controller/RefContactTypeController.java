@@ -33,13 +33,13 @@ public class RefContactTypeController {
         if (refContactTypeDTO == null) {
             throw new NotFoundException();
         }
-        return contactTypeService.findByKey(id);
+        return refContactTypeDTO;
     }
 
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public String save(@RequestBody RefContactTypeDTO refContactTypeDTO) throws UnexpectedIdException {
+    public String save(@Valid @RequestBody RefContactTypeDTO refContactTypeDTO) throws UnexpectedIdException {
         if (refContactTypeDTO.getCode() != null) {
             throw new UnexpectedIdException();
         }
@@ -58,7 +58,7 @@ public class RefContactTypeController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String delete(@PathVariable("id") Integer id) {
         contactTypeService.delete(id);
         return "Delete successful!";

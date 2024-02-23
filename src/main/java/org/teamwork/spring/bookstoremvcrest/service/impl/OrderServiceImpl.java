@@ -38,7 +38,7 @@ public class OrderServiceImpl implements DefaultService<FullOrderDTO, Order, Int
 
     @Override
     public FullOrderDTO findByKey(Integer key) {
-        return mapper.toDTO(orderRepository.findById(key), FullOrderDTO.class);
+        return mapper.toDTO(orderRepository.findById(key).orElse(null), FullOrderDTO.class);
     }
 
     public List<FullOrderDTO> findAllByCostumer(Costumer costumer) {
