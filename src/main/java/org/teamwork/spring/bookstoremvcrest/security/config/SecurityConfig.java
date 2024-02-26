@@ -22,6 +22,8 @@ public class SecurityConfig {
         security.csrf(AbstractHttpConfigurer::disable);
         security.authorizeHttpRequests(request -> request.requestMatchers("/").permitAll());
         security.authorizeHttpRequests(request -> request.requestMatchers("/users/register").permitAll());
+        security.authorizeHttpRequests(request -> request.requestMatchers("/doc").hasAnyRole("ADMIN", "MANAGER"));
+        security.authorizeHttpRequests(request -> request.requestMatchers("/swagger-ui/**").hasAnyRole("ADMIN", "MANAGER"));
         security.authorizeHttpRequests(request -> request.requestMatchers("/**").authenticated());
         security.formLogin(AbstractAuthenticationFilterConfigurer::permitAll);
         security.httpBasic(Customizer.withDefaults());

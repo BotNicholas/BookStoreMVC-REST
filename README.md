@@ -13,6 +13,10 @@ spring.datasource.username=ENTER_HERE_USER
 spring.datasource.password=ENTER_HERE_PASSWORD
 spring.jpa.hibernate.ddl-auto=update
 #spring.jpa.show-sql=true
+
+#FOR SWAGGER (is already connected)
+springdoc.swagger-ui.path=/doc
+springdoc.swagger-ui.operationsSorter=method
 ```
 [How to connect MySQL to Spring boot here...](https://spring.io/guides/gs/accessing-data-mysql#_create_the_application_properties_file)
 
