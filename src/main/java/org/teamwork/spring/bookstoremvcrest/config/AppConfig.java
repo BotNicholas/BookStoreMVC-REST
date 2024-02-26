@@ -30,8 +30,7 @@ public class AppConfig {
     private OrderItemRepository orderItemRepository;
 
     @Bean
-//    @Scope(scopeName = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-    public ModelMapper modelMapper(){
+    public ModelMapper modelMapper() {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT)
                 .setFieldMatchingEnabled(true)
@@ -42,14 +41,14 @@ public class AppConfig {
         return mapper;
     }
 
-    private void addCustomMappings(ModelMapper mapper){
+    private void addCustomMappings(ModelMapper mapper) {
         authorsCustomMapper(mapper);
         customerCustomMapper(mapper);
         orderCustomMapper(mapper);
         lightOrderItemCustomMapper(mapper);
     }
 
-    private void authorsCustomMapper(ModelMapper mapper){
+    private void authorsCustomMapper(ModelMapper mapper) {
         //To DTO
         mapper.typeMap(Author.class, AuthorDTO.class).addMappings(mapping -> mapping.using((MappingContext<List<Book>, List<Integer>> context) -> {
             List<Book> books = context.getSource();
@@ -63,7 +62,7 @@ public class AppConfig {
         }).map(AuthorDTO::getBooks, Author::setBooks));
     }
 
-    private void customerCustomMapper(ModelMapper mapper){
+    private void customerCustomMapper(ModelMapper mapper) {
         //To DTO
         mapper.typeMap(Costumer.class, CostumerDTO.class).addMappings(mapping -> mapping.using((MappingContext<List<Order>, List<Integer>> context) -> {
             List<Order> orders = context.getSource();
@@ -71,13 +70,13 @@ public class AppConfig {
         }).map(Costumer::getOrders, CostumerDTO::setOrders));
 
         //From DTO
-        mapper.typeMap(CostumerDTO.class, Costumer.class).addMappings(mapping -> mapping.using((MappingContext<List<Integer>, List<Order>> context)->{
+        mapper.typeMap(CostumerDTO.class, Costumer.class).addMappings(mapping -> mapping.using((MappingContext<List<Integer>, List<Order>> context) -> {
             List<Integer> ordersId = context.getSource();
             return ordersId.stream().map(orderId -> orderRepository.findById(orderId).orElse(null)).collect(Collectors.toList());
         }).map(CostumerDTO::getOrders, Costumer::setOrders));
     }
 
-    private void orderCustomMapper(ModelMapper mapper){
+    private void orderCustomMapper(ModelMapper mapper) {
         //To DTO
         mapper.typeMap(Order.class, OrderDTO.class).addMappings(mapping -> mapping.using((MappingContext<List<OrderItem>, List<Integer>> context) -> {
             List<OrderItem> orderItems = context.getSource();
@@ -91,7 +90,7 @@ public class AppConfig {
         }).map(OrderDTO::getItemList, Order::setItemList));
     }
 
-    private void lightOrderItemCustomMapper(ModelMapper mapper){
+    private void lightOrderItemCustomMapper(ModelMapper mapper) {
         //to DTO
         mapper.typeMap(OrderItem.class, LightOrderItemDTO.class).addMappings(mapping -> mapping.using((MappingContext<Book, Integer> context) -> {
             Book book = context.getSource();

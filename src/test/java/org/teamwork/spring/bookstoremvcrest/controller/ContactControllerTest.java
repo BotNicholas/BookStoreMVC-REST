@@ -23,6 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @AutoConfigureMockMvc(addFilters = false)
 @SpringBootTest
 @WithMockUser(username = "admin", roles = "ADMIN")
@@ -34,7 +35,7 @@ public class ContactControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private ContactDTO contactDTO = new ContactDTO(new RefContactTypeDTO("a"), "a", "b", "+37379435954", "+37378124354", "nothing");
+    private final ContactDTO contactDTO = new ContactDTO(new RefContactTypeDTO("a"), "a", "b", "+37379435954", "+37378124354", "nothing");
 
     @Test
     @DisplayName("get contact by id")
@@ -70,6 +71,7 @@ public class ContactControllerTest {
                 .andExpect(status().isCreated())
                 .andDo(print());
     }
+
     @Test
     @DisplayName("update contact")
     public void testUpdateContact() throws Exception {

@@ -1,7 +1,6 @@
 package org.teamwork.spring.bookstoremvcrest.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +14,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/categories")
 public class BookCategoryController {
-    @Autowired
-    private BookCategoryServiceImpl categoryService;
+    private final BookCategoryServiceImpl categoryService;
+
+    public BookCategoryController(BookCategoryServiceImpl categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @GetMapping("")
     @PreAuthorize("hasAnyRole('USER', 'MANAGER', 'ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public List<BookCategoryDTO> findAll(){
+    public List<BookCategoryDTO> findAll() {
         return categoryService.findAll();
     }
 
@@ -50,7 +52,7 @@ public class BookCategoryController {
     @PatchMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public String update(@Valid @RequestBody BookCategoryDTO categoryDTO, @PathVariable("id") Integer id){
+    public String update(@Valid @RequestBody BookCategoryDTO categoryDTO, @PathVariable("id") Integer id) {
         categoryService.update(id, categoryDTO);
         return "Success!";
     }
@@ -58,7 +60,7 @@ public class BookCategoryController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String delete(@PathVariable("id") Integer id){
+    public String delete(@PathVariable("id") Integer id) {
         categoryService.delete(id);
         return "Success!";
     }

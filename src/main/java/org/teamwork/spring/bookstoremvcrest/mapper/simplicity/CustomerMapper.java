@@ -7,7 +7,7 @@ import org.teamwork.spring.bookstoremvcrest.model.Costumer;
 import org.teamwork.spring.bookstoremvcrest.model.dto.CostumerDTO;
 
 @Component
-public class CustomerMapper implements DefaultMapper<CostumerDTO, Costumer>{
+public class CustomerMapper implements DefaultMapper<CostumerDTO, Costumer> {
     @Autowired
     private ModelMapper modelMapper;
 

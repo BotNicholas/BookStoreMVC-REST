@@ -39,13 +39,13 @@ public class AuthorizedOrderItemControllerTest {
     @MockBean
     private OrderItemServiceImpl service;
 
-    private CostumerDTO costumerDTO1 = new CostumerDTO(1, "1000000000000", "test costumer1", "test address1", "+37310000000", "example1@gmail.com");;
-    private OrderDTO orderDTO1 = new OrderDTO(costumerDTO1, new Date(), 10.0, List.of(1));
-    private AuthorDTO authorDTO = new AuthorDTO("a", "ab", "ab", LocalDate.of(2000, 04, 23), "M", "+37379344245", "sport analyst");
-    private BookCategoryDTO bookCategoryDTO = new BookCategoryDTO("lots of plot-twists");
-    private BookDTO bookDTO = new BookDTO(authorDTO,bookCategoryDTO, "123-4-22-234567-1", LocalDate.of(2000, 04, 23), LocalDate.of(2005, 04, 28), "Sample Book Title", 19.99, "Sample comments about the book.");
-    private OrderItemDTO orderItemDTO1 = new OrderItemDTO(orderDTO1, bookDTO, 20.5, "comment1");
-    private OrderItemDTO orderItemDTO2 = new OrderItemDTO(orderDTO1, bookDTO, 25.0, "comment2");
+    private final CostumerDTO costumerDTO1 = new CostumerDTO(1, "1000000000000", "test costumer1", "test address1", "+37310000000", "example1@gmail.com");
+    private final OrderDTO orderDTO1 = new OrderDTO(costumerDTO1, new Date(), 10.0, List.of(1));
+    private final AuthorDTO authorDTO = new AuthorDTO("a", "ab", "ab", LocalDate.of(2000, 04, 23), "M", "+37379344245", "sport analyst");
+    private final BookCategoryDTO bookCategoryDTO = new BookCategoryDTO("lots of plot-twists");
+    private final BookDTO bookDTO = new BookDTO(authorDTO, bookCategoryDTO, "123-4-22-234567-1", LocalDate.of(2000, 04, 23), LocalDate.of(2005, 04, 28), "Sample Book Title", 19.99, "Sample comments about the book.");
+    private final OrderItemDTO orderItemDTO1 = new OrderItemDTO(orderDTO1, bookDTO, 20.5, "comment1");
+    private final OrderItemDTO orderItemDTO2 = new OrderItemDTO(orderDTO1, bookDTO, 25.0, "comment2");
 
     @Test
     @DisplayName("get order items for authenticated user test...")
@@ -53,7 +53,7 @@ public class AuthorizedOrderItemControllerTest {
         List orderItems = List.of(orderItemDTO1, orderItemDTO2);
         Mockito.when(service.findAllByCostumer(costumer)).thenReturn(orderItems);
 
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL+"/my")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/my")
                 .characterEncoding(StandardCharsets.UTF_8)
                 .with(SecurityMockMvcRequestPostProcessors.authentication(new UsernamePasswordAuthenticationToken(userDetails, null, null))));
 

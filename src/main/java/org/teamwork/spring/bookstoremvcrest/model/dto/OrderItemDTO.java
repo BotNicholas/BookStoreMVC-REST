@@ -9,7 +9,7 @@ public class OrderItemDTO implements DefaultDTO {
     private OrderDTO order;
     @NotNull(message = "Specify the order item!")
     private BookDTO book;
-    @Min(value = 1, message = "Minipal agreed price is 1")
+    @Min(value = 1, message = "Minimal agreed price is 1")
     private Double itemAgreedPrice;
     private String itemComment;
 

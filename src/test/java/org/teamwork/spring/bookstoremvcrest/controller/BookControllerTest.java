@@ -1,4 +1,5 @@
 package org.teamwork.spring.bookstoremvcrest.controller;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,8 +10,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.teamwork.spring.bookstoremvcrest.model.Author;
-import org.teamwork.spring.bookstoremvcrest.model.BookCategory;
 import org.teamwork.spring.bookstoremvcrest.model.dto.AuthorDTO;
 import org.teamwork.spring.bookstoremvcrest.model.dto.BookCategoryDTO;
 import org.teamwork.spring.bookstoremvcrest.model.dto.BookDTO;
@@ -18,7 +17,6 @@ import org.teamwork.spring.bookstoremvcrest.service.impl.BookServiceImpl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.doNothing;

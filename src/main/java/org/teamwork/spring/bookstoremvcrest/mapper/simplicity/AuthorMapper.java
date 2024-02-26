@@ -7,7 +7,7 @@ import org.teamwork.spring.bookstoremvcrest.model.Author;
 import org.teamwork.spring.bookstoremvcrest.model.dto.AuthorDTO;
 
 @Component
-public class AuthorMapper implements DefaultMapper<AuthorDTO, Author>{
+public class AuthorMapper implements DefaultMapper<AuthorDTO, Author> {
     @Autowired
     private ModelMapper modelMapper;
 

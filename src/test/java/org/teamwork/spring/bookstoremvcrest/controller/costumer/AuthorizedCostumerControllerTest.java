@@ -35,19 +35,15 @@ public class AuthorizedCostumerControllerTest {
     @MockBean
     private CostumerServiceImpl costumerService;
 
-    private CostumerDTO costumerDTO = new CostumerDTO(1, "1000000000000", "test costumer1", "test address1", "+37310000000", "example1@gmail.com");
+    private final CostumerDTO costumerDTO = new CostumerDTO(1, "1000000000000", "test costumer1", "test address1", "+37310000000", "example1@gmail.com");
 
     @Test
     @DisplayName("obtaining current user's costumer info...")
     public void getMyCostumerTest() throws Exception {
         Mockito.when(costumerService.findByKey(1)).thenReturn(costumerDTO);
 
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get(URL+"/me")
-                        //By default, when Http request reaches the server it passes security filter chain, that places Authentication in SecurityContext, if user is authenticated
-                //In the end FilterSecurityInterceptor checks if Authentication is present. If not, 401, if yes request is passed in controller...
-                .with(SecurityMockMvcRequestPostProcessors.authentication(new UsernamePasswordAuthenticationToken(userDetails, null, null)))); //we want to send request with specified Authentication in securityContext
-        //Remember that we do not use Authentication Filters, thus we have to provide Authentication manually
-        //@AutoConfigureMockMvc(addFilters = true) is needed, because (from SecurityMockMvcRequestPostProcessors.authentication documentation) "To associate the request to the SecurityContextHolder you need to ensure that the SecurityContextPersistenceFilter is associated with the MockMvc instance. "
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/me")
+                .with(SecurityMockMvcRequestPostProcessors.authentication(new UsernamePasswordAuthenticationToken(userDetails, null, null))));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(costumerDTO)))
@@ -59,7 +55,7 @@ public class AuthorizedCostumerControllerTest {
     public void updateMyCostumerTest() throws Exception {
         Mockito.when(costumerService.update(1, costumerDTO)).thenReturn(costumerDTO);
 
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.patch(URL+"/me")
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.patch(URL + "/me")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(costumerDTO))
                 .with(SecurityMockMvcRequestPostProcessors.authentication(new UsernamePasswordAuthenticationToken(userDetails, null, null)))

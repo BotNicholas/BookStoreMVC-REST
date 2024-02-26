@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -44,7 +43,7 @@ public class Costumer {
         orders = new ArrayList<>();
     }
 
-    public Costumer(String name){
+    public Costumer(String name) {
         idnp = "0000000000000";
         address = "unset";
         phone = "+37300000000";
@@ -139,4 +138,3 @@ public class Costumer {
                 '}';
     }
 }
-//order_items - is a referencing table but because it has more than just keys columns, so we have to make an entity from it. Consequently, relation won't be many to many

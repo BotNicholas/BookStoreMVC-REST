@@ -23,9 +23,8 @@ import org.teamwork.spring.bookstoremvcrest.security.model.dto.BookStoreUserDTO;
 import org.teamwork.spring.bookstoremvcrest.security.services.BookStoreUserServiceImpl;
 
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
-import static org.teamwork.spring.bookstoremvcrest.controller.AuthenticationTestsConstants.*;
+import static org.teamwork.spring.bookstoremvcrest.controller.AuthenticationTestsConstants.userDetails;
 import static org.teamwork.spring.bookstoremvcrest.controller.users.UsersControllerTestConstants.URL;
 
 @AutoConfigureMockMvc
@@ -41,15 +40,15 @@ public class AuthorizedUsersControllerTest {
     @MockBean
     private PasswordEncoder encoder;
 
-    private CostumerDTO costumerDTO1 = new CostumerDTO(1, "1000000000000", "test costumer1", "test address1", "+37310000000", "example1@gmail.com");
-    private BookStoreUserDTO userDTO = new BookStoreUserDTO("aaa", "aaaaaa", "aaa", costumerDTO1);
+    private final CostumerDTO costumerDTO1 = new CostumerDTO(1, "1000000000000", "test costumer1", "test address1", "+37310000000", "example1@gmail.com");
+    private final BookStoreUserDTO userDTO = new BookStoreUserDTO("aaa", "Password_123", "aaa", costumerDTO1);
 
     @Test
     @DisplayName("get authorized user's info test...")
     public void getUserInfo() throws Exception {
         Mockito.when(service.findByUsername("aaa")).thenReturn(userDTO);
 
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL+"/me")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/me")
                 .characterEncoding(StandardCharsets.UTF_8)
                 .with(SecurityMockMvcRequestPostProcessors.authentication(new UsernamePasswordAuthenticationToken(userDetails, null, null))));
 
@@ -63,7 +62,7 @@ public class AuthorizedUsersControllerTest {
     public void updateUserInfo() throws Exception {
         Mockito.when(service.update("aaa", userDTO)).thenReturn(userDTO);
 
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.patch(URL+"/me")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.patch(URL + "/me")
                 .characterEncoding(StandardCharsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDTO))

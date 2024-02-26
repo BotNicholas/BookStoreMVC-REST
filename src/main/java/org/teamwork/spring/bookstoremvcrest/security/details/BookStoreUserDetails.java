@@ -18,7 +18,7 @@ public class BookStoreUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(user.getRoles().split(",\\s+")).map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
+        return Arrays.stream(user.getRoles().split(",\\s+")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     @Override

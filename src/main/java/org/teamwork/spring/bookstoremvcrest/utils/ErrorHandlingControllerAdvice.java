@@ -16,7 +16,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 public class ErrorHandlingControllerAdvice {
     @ExceptionHandler(UnexpectedIdException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public UsedIdError onUsedIdException(UnexpectedIdException e){
+    public UsedIdError onUsedIdException(UnexpectedIdException e) {
         UsedIdError error = new UsedIdError();
         error.setMessage(e.getMessage());
         return error;
@@ -24,7 +24,7 @@ public class ErrorHandlingControllerAdvice {
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ValidationConstraintsError onValidationError(ConstraintViolationException e){
+    public ValidationConstraintsError onValidationError(ConstraintViolationException e) {
         ValidationConstraintsError error = new ValidationConstraintsError();
         error.addViolations(e.getConstraintViolations());
         error.setMessage("The object did not pass the validation! Violated constraints:");
@@ -33,7 +33,7 @@ public class ErrorHandlingControllerAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ValidationConstraintsError onMethodArgumentValidationError(MethodArgumentNotValidException e){
+    public ValidationConstraintsError onMethodArgumentValidationError(MethodArgumentNotValidException e) {
         ValidationConstraintsError error = new ValidationConstraintsError();
         error.addViolations(e.getBindingResult().getFieldErrors());
         error.setMessage("The object did not pass the validation! Violated constraints:");
@@ -56,7 +56,6 @@ public class ErrorHandlingControllerAdvice {
         } else {
             error.setMessage(e.getMessage());
         }
-
         return error;
     }
 

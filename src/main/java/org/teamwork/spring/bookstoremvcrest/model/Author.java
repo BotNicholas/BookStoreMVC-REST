@@ -7,7 +7,9 @@ import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "authors")
@@ -122,7 +124,7 @@ public class Author {
         this.books = books;
     }
 
-    public void addBook(Book book){
+    public void addBook(Book book) {
         this.books.add(book);
     }
 

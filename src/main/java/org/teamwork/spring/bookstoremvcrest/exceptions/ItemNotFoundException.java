@@ -1,6 +1,6 @@
 package org.teamwork.spring.bookstoremvcrest.exceptions;
 
-public class ItemNotFoundException extends Exception{
+public class ItemNotFoundException extends Exception {
     public ItemNotFoundException() {
         super("Such object was not found!");
     }

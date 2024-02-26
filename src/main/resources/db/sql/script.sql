@@ -133,8 +133,3 @@ insert into contacts (id, contact_type_code, firstname, lastname, work_phone, ce
 values
 (1, 1, 'John', 'Doe', '+37360000003', '+37360000004', 'Contact for book signings'),
 (2, 2, 'Supply', 'Company', '+37360000005', '+37360000006', 'Bulk order contact');
-
-
--- select * from order_items
--- or --
-# select * from 

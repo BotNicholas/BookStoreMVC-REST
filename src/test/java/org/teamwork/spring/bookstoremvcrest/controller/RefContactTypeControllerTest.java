@@ -34,8 +34,8 @@ public class RefContactTypeControllerTest {
     @MockBean
     private RefContactTypeServiceImpl service;
 
-    private RefContactTypeDTO refContactTypeDTO1 = new RefContactTypeDTO("TEST1");
-    private RefContactTypeDTO refContactTypeDTO2 = new RefContactTypeDTO("TEST2");
+    private final RefContactTypeDTO refContactTypeDTO1 = new RefContactTypeDTO("TEST1");
+    private final RefContactTypeDTO refContactTypeDTO2 = new RefContactTypeDTO("TEST2");
 
     @Test
     @DisplayName("find all ref contact types test...")
@@ -56,7 +56,7 @@ public class RefContactTypeControllerTest {
     public void findFirstRefContactType() throws Exception {
         Mockito.when(service.findByKey(1)).thenReturn(refContactTypeDTO1);
 
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL+"/1")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/1")
                 .characterEncoding(StandardCharsets.UTF_8));
 
         actions.andExpect(MockMvcResultMatchers.status().isOk())
@@ -67,7 +67,7 @@ public class RefContactTypeControllerTest {
     @Test
     @DisplayName("find non-existing ref contact type test...")
     public void findNonExistingRefContactType() throws Exception {
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL+"/777")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/777")
                 .characterEncoding(StandardCharsets.UTF_8));
 
         actions.andExpect(MockMvcResultMatchers.status().isNotFound())
@@ -112,7 +112,7 @@ public class RefContactTypeControllerTest {
     public void updateFirstRefContactType() throws Exception {
         Mockito.when(service.update(1, refContactTypeDTO1)).thenReturn(refContactTypeDTO1);
 
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.patch(URL+"/1")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.patch(URL + "/1")
                 .characterEncoding(StandardCharsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(refContactTypeDTO1)));
@@ -125,7 +125,7 @@ public class RefContactTypeControllerTest {
     @Test
     @DisplayName("delete 1'st ref contact type test...")
     public void deleteFirstRefContactType() throws Exception {
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.delete(URL+"/1")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.delete(URL + "/1")
                 .characterEncoding(StandardCharsets.UTF_8));
 
         actions.andExpect(MockMvcResultMatchers.status().isNoContent())

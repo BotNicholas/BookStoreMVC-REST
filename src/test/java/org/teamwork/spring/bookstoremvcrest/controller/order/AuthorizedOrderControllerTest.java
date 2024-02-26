@@ -51,7 +51,7 @@ public class AuthorizedOrderControllerTest {
     @Test
     @DisplayName("get authorized user's orders test...")
     public void getUserOrders() throws Exception {
-        List <FullOrderDTO> orders = List.of(fullOrderDTO1, fullOrderDTO2);
+        List<FullOrderDTO> orders = List.of(fullOrderDTO1, fullOrderDTO2);
         Mockito.when(service.findAllByCostumer(costumer)).thenReturn(orders);
 
         ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/my")
@@ -89,7 +89,7 @@ public class AuthorizedOrderControllerTest {
 
     @Test
     @DisplayName("add new order with id for authorized user test...")
-    public void saveOrderWithIdForUser() throws Exception{
+    public void saveOrderWithIdForUser() throws Exception {
         MyFullOrderDTO myFullOrderDTO = new MyFullOrderDTO();
         myFullOrderDTO.setId(1);
         myFullOrderDTO.setOrderDate(fullOrderDTO1.getOrderDate());
@@ -97,7 +97,7 @@ public class AuthorizedOrderControllerTest {
         myFullOrderDTO.setCostumer(fullOrderDTO1.getCostumer());
         myFullOrderDTO.setItemList(fullOrderDTO1.getItemList());
 
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(URL+"/my")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(URL + "/my")
                 .characterEncoding(StandardCharsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(myFullOrderDTO))

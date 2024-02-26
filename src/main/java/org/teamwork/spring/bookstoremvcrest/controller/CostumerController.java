@@ -1,7 +1,6 @@
 package org.teamwork.spring.bookstoremvcrest.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -17,8 +16,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/costumers")
 public class CostumerController {
-    @Autowired
-    private CostumerServiceImpl costumerService;
+    private final CostumerServiceImpl costumerService;
+
+    public CostumerController(CostumerServiceImpl costumerService) {
+        this.costumerService = costumerService;
+    }
 
     @GetMapping("")
     @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
@@ -65,22 +67,18 @@ public class CostumerController {
         return "Delete successful!";
     }
 
-
-    //Special for user
     @GetMapping("/me")
-//    @PreAuthorize("hasRole('USER')") //this role is needed because only user can be a costumer!
     @ResponseStatus(HttpStatus.OK)
-    public CostumerDTO showMe(Authentication authentication){
+    public CostumerDTO showMe(Authentication authentication) {
         BookStoreUserDetails userDetails = (BookStoreUserDetails) authentication.getPrincipal();
         return costumerService.findByKey(userDetails.getUser().getCostumer().getId());
     }
 
-        @PatchMapping("/me")
-    //    @PreAuthorize("hasRole('USER')")
-        @ResponseStatus(HttpStatus.OK)
-        public String updateMe(Authentication authentication, @Valid @RequestBody CostumerDTO costumerDTO) {
-            BookStoreUserDetails user = (BookStoreUserDetails) authentication.getPrincipal();
-            costumerService.update(user.getUser().getCostumer().getId(), costumerDTO);
-            return "Success!";
-        }
+    @PatchMapping("/me")
+    @ResponseStatus(HttpStatus.OK)
+    public String updateMe(Authentication authentication, @Valid @RequestBody CostumerDTO costumerDTO) {
+        BookStoreUserDetails user = (BookStoreUserDetails) authentication.getPrincipal();
+        costumerService.update(user.getUser().getCostumer().getId(), costumerDTO);
+        return "Success!";
+    }
 }

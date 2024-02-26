@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.teamwork.spring.bookstoremvcrest.model.dto.DefaultDTO;
 
 @Component
-public class AbstractMapperImpl implements AbstractMapper{
+public class AbstractMapperImpl implements AbstractMapper {
     @Autowired
     private ModelMapper modelMapper;
 

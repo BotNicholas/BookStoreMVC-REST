@@ -1,6 +1,5 @@
 package org.teamwork.spring.bookstoremvcrest.security.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,10 +9,14 @@ import org.teamwork.spring.bookstoremvcrest.security.repositories.BookStoreUserR
 
 @Service
 public class BookStoreUserDetailsService implements UserDetailsService {
-    @Autowired
-    private BookStoreUserRepository repository;
+    private final BookStoreUserRepository repository;
+
+    public BookStoreUserDetailsService(BookStoreUserRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return new BookStoreUserDetails(repository.findByUsername(username).orElseThrow(()->new UsernameNotFoundException("Such user was not found!")));
+        return new BookStoreUserDetails(repository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Such user was not found!")));
     }
 }

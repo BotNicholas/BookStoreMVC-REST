@@ -2,11 +2,12 @@ package org.teamwork.spring.bookstoremvcrest.security.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 import org.teamwork.spring.bookstoremvcrest.model.Costumer;
 
 @Entity
-@Table(name = "users", uniqueConstraints =  @UniqueConstraint(columnNames = "username"))
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class BookStoreUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,8 +17,10 @@ public class BookStoreUser {
     private String username;
 
     @NotEmpty(message = "Specify password!")
-//    @Pattern(regexp = "^[a-zA-Z0-9_]+$", message = "Use only locase and uppercase letters, numers and _ sign!")
-    @Length(min = 5, message = "Minimal length is 5!")
+    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*\\_-]).{8,}$",
+            message = "Minimum 8 characters in length, at least one uppercase and one lowercase English letter, " +
+                    "at least one digit and at least one special character!")
+    @Length(min = 8, message = "Minimal length is 8!")
     private String password;
 
     @NotEmpty

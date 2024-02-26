@@ -7,7 +7,7 @@ import org.teamwork.spring.bookstoremvcrest.model.OrderItem;
 import org.teamwork.spring.bookstoremvcrest.model.dto.OrderItemDTO;
 
 @Component
-public class OrderItemMapper implements DefaultMapper<OrderItemDTO, OrderItem>{
+public class OrderItemMapper implements DefaultMapper<OrderItemDTO, OrderItem> {
     @Autowired
     private ModelMapper mapper;
 

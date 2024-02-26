@@ -7,7 +7,6 @@ import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class BookDTO implements DefaultDTO {
     private Integer id;
@@ -16,7 +15,7 @@ public class BookDTO implements DefaultDTO {
     @NotNull(message = "Book category must be specified!")
     private BookCategoryDTO category;
     @NotEmpty(message = "ISBN can not be empty!")
-    @Pattern(regexp = "\\d\\d\\d-\\d-\\d\\d-\\d\\d\\d\\d\\d\\d-\\d", message = "ISBN must be in format: xxx-x-xx-xxxxxx-x")
+    @Pattern(regexp = "^\\d{3}-\\d-\\d{2}-\\d{6}-\\d$", message = "ISBN must be in format: xxx-x-xx-xxxxxx-x")
     @Length(min = 17, max = 17)
     private String isbn;
     @NotNull(message = "Publication date must be specified!")

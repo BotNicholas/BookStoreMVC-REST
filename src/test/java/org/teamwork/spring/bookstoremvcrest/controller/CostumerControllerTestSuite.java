@@ -8,7 +8,7 @@ import org.teamwork.spring.bookstoremvcrest.controller.costumer.AuthorizedCostum
 import org.teamwork.spring.bookstoremvcrest.controller.costumer.CostumerControllerTest;
 
 @Suite
-@SuiteDisplayName("Costumer Controller tests...") //for maven
+@SuiteDisplayName("Costumer Controller tests...")
 @DisplayName("Costumer Controller Test Suite")
 @SelectClasses({CostumerControllerTest.class, AuthorizedCostumerControllerTest.class})
 public class CostumerControllerTestSuite {

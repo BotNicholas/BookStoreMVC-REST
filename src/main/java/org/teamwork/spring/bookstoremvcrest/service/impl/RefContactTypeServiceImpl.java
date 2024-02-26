@@ -1,6 +1,5 @@
 package org.teamwork.spring.bookstoremvcrest.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.teamwork.spring.bookstoremvcrest.mapper.abstraction.AbstractMapper;
 import org.teamwork.spring.bookstoremvcrest.model.RefContactType;
@@ -13,15 +12,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class RefContactTypeServiceImpl implements DefaultService<RefContactTypeDTO, RefContactType, Integer> {
-    @Autowired
-    private RefContactTypeRepository refContactTypeRepository;
-    @Autowired
-    private AbstractMapper mapper;
+    private final RefContactTypeRepository refContactTypeRepository;
+    private final AbstractMapper mapper;
+
+    public RefContactTypeServiceImpl(RefContactTypeRepository refContactTypeRepository, AbstractMapper mapper) {
+        this.refContactTypeRepository = refContactTypeRepository;
+        this.mapper = mapper;
+    }
+
     @Override
     public List<RefContactTypeDTO> findAll() {
         List<RefContactType> refContactTypes = refContactTypeRepository.findAll();
-        List<RefContactTypeDTO> refContactTypeDTOS = refContactTypes.stream().map(refContactType -> mapper.toDTO(refContactType, RefContactTypeDTO.class)).collect(Collectors.toList());
-        return refContactTypeDTOS;
+        return refContactTypes.stream().map(refContactType -> mapper.toDTO(refContactType, RefContactTypeDTO.class)).collect(Collectors.toList());
     }
 
     @Override

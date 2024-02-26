@@ -34,7 +34,7 @@ public class BookCategoryControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private BookCategoryDTO bookCategoryDTO = new BookCategoryDTO("lots of plot-twists");
+    private final BookCategoryDTO bookCategoryDTO = new BookCategoryDTO("lots of plot-twists");
 
     @Test
     @DisplayName("get book category by id")

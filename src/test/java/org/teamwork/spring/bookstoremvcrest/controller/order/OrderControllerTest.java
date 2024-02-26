@@ -30,13 +30,8 @@ import static org.teamwork.spring.bookstoremvcrest.controller.order.OrderControl
 
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(controllers = OrderController.class)
-//@SpringBootTest //Security config will be applied and all the endpoints will te secured (ask Authentication) - I do not need it! Thus I have to use @WithMockUser, or @WebMvcTest
-//I have my own Spring security config file, Where i specified that all the paths must be authorized (/**)
-//When I start whole Spring Context, this config is created and applied, so when you will try to access secured endpoints
-//Despite SecurityFilters are turned off, Authentication will be required. That's why I use @WebMvcTest
 @DisplayName("Order Controller Test")
 public class OrderControllerTest {
-
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -57,7 +52,6 @@ public class OrderControllerTest {
 
     @Test
     @DisplayName("find all orders test...")
-//    @WithMockUser(username = "test", password = "test") //If filters are turned on or Full App context with custom Spring security is started
     public void findAllOrders() throws Exception {
         List<FullOrderDTO> fullOrderDTOS = List.of(fullOrderDTO1, fullOrderDTO2);
         Mockito.when(service.findAll()).thenReturn(fullOrderDTOS);
@@ -75,7 +69,7 @@ public class OrderControllerTest {
     public void findFirstOrder() throws Exception {
         Mockito.when(service.findByKey(1)).thenReturn(fullOrderDTO1);
 
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL+"/1")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/1")
                 .characterEncoding(StandardCharsets.UTF_8));
 
         actions.andExpect(MockMvcResultMatchers.status().isOk())
@@ -86,7 +80,7 @@ public class OrderControllerTest {
     @Test
     @DisplayName("find non-existing order...")
     public void findNonExistingOrder() throws Exception {
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL+"/777")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/777")
                 .characterEncoding(StandardCharsets.UTF_8));
 
         actions.andExpect(MockMvcResultMatchers.status().isNotFound())
@@ -161,7 +155,7 @@ public class OrderControllerTest {
     @Test
     @DisplayName("delete 1'st order test...")
     public void deleteFirstOrder() throws Exception {
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.delete(URL+"/1")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.delete(URL + "/1")
                 .characterEncoding(StandardCharsets.UTF_8));
 
         actions.andExpect(MockMvcResultMatchers.status().isNoContent())

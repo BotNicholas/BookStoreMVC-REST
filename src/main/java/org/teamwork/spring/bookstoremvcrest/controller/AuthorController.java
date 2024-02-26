@@ -1,7 +1,6 @@
 package org.teamwork.spring.bookstoremvcrest.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,15 +14,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/authors")
 public class AuthorController {
-    @Autowired
-    private AuthorServiceImpl authorService;
+    private final AuthorServiceImpl authorService;
+
+    public AuthorController(AuthorServiceImpl authorService) {
+        this.authorService = authorService;
+    }
 
     @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
-//    @PreAuthorize("hasAuthority('ROLE_USER') || hasAuthority('ROLE_MANAGER') || hasAuthority('ROLE_ADMIN')")
-    //OR
-//    @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_MANAGER') or hasAuthority('ROLE_ADMIN')")
-    //OR
     @PreAuthorize("hasAnyRole('USER', 'MANAGER', 'ADMIN')")
     public List<AuthorDTO> findAll() {
         return authorService.findAll();
@@ -52,8 +50,6 @@ public class AuthorController {
     }
 
     @PatchMapping("/{id}")
-//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    //OR
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public String update(@Valid @RequestBody AuthorDTO authorDTO, @PathVariable Integer id) {
@@ -64,7 +60,7 @@ public class AuthorController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String delete(@PathVariable("id") Integer id){
+    public String delete(@PathVariable("id") Integer id) {
         authorService.delete(id);
         return "Deleted successful!";
     }

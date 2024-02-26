@@ -14,7 +14,7 @@ public class BookCategory {
     @NotEmpty(message = "Category must be specified!")
     @Column(name = "category_description")
     private String categoryDescription;
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL) //When category will be removed its books also must be removed
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Book> books;
 
     public BookCategory() {

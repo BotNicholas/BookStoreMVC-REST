@@ -1,14 +1,10 @@
 package org.teamwork.spring.bookstoremvcrest.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.teamwork.spring.bookstoremvcrest.mapper.abstraction.AbstractMapper;
-import org.teamwork.spring.bookstoremvcrest.mapper.simplicity.DefaultMapper;
 import org.teamwork.spring.bookstoremvcrest.model.Contact;
-import org.teamwork.spring.bookstoremvcrest.model.RefContactType;
 import org.teamwork.spring.bookstoremvcrest.model.dto.ContactDTO;
 import org.teamwork.spring.bookstoremvcrest.repository.ContactRepository;
-import org.teamwork.spring.bookstoremvcrest.repository.RefContactTypeRepository;
 import org.teamwork.spring.bookstoremvcrest.service.DefaultService;
 
 import java.util.List;
@@ -16,17 +12,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class ContactServiceImpl implements DefaultService<ContactDTO, Contact, Integer> {
-    @Autowired
-    private ContactRepository contactRepository;
-    @Autowired
-    private RefContactTypeRepository contactTypeRepository;
-    @Autowired
-    private AbstractMapper mapper;
+    private final ContactRepository contactRepository;
+    private final AbstractMapper mapper;
+
+    public ContactServiceImpl(ContactRepository contactRepository, AbstractMapper mapper) {
+        this.contactRepository = contactRepository;
+        this.mapper = mapper;
+    }
+
     @Override
     public List<ContactDTO> findAll() {
         List<Contact> contacts = contactRepository.findAll();
-        List<ContactDTO> contactDTOS = contacts.stream().map(contact -> mapper.toDTO(contact, ContactDTO.class)).collect(Collectors.toList());
-        return contactDTOS;
+        return contacts.stream().map(contact -> mapper.toDTO(contact, ContactDTO.class)).collect(Collectors.toList());
     }
 
     @Override

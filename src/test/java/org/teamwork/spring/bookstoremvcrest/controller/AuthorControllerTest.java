@@ -1,7 +1,6 @@
 package org.teamwork.spring.bookstoremvcrest.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.With;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.teamwork.spring.bookstoremvcrest.model.dto.AuthorDTO;
 import org.teamwork.spring.bookstoremvcrest.service.impl.AuthorServiceImpl;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @AutoConfigureMockMvc(addFilters = false)
 @SpringBootTest
 @WithMockUser(username = "admin", roles = "ADMIN")
@@ -36,8 +35,8 @@ public class AuthorControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private AuthorDTO authorDTO1 = new AuthorDTO("a", "ab", "ab", LocalDate.of(2000, 04, 23), "M", "+37379344245", "sport analyst");
-    private AuthorDTO authorDTO2 = new AuthorDTO("c", "d", "cd", LocalDate.of(1999, 07, 22), "M", "+37378227243", "loves camping");
+    private final AuthorDTO authorDTO1 = new AuthorDTO("a", "ab", "ab", LocalDate.of(2000, 04, 23), "M", "+37379344245", "sport analyst");
+    private final AuthorDTO authorDTO2 = new AuthorDTO("c", "d", "cd", LocalDate.of(1999, 07, 22), "M", "+37378227243", "loves camping");
 
     @Test
     @DisplayName("get author by id")
@@ -47,7 +46,7 @@ public class AuthorControllerTest {
         mockMvc.perform(get("/authors/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(authorDTO1)))
-                .andDo(print());;
+                .andDo(print());
     }
 
     @Test

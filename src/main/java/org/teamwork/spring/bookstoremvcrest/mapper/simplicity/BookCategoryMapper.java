@@ -7,7 +7,7 @@ import org.teamwork.spring.bookstoremvcrest.model.BookCategory;
 import org.teamwork.spring.bookstoremvcrest.model.dto.BookCategoryDTO;
 
 @Component
-public class BookCategoryMapper implements DefaultMapper<BookCategoryDTO, BookCategory>{
+public class BookCategoryMapper implements DefaultMapper<BookCategoryDTO, BookCategory> {
     @Autowired
     private ModelMapper mapper;
 

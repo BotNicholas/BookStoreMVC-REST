@@ -1,7 +1,6 @@
 package org.teamwork.spring.bookstoremvcrest.security.controllers;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -18,15 +17,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UsersController {
-    @Autowired
-    private BookStoreUserServiceImpl service;
-    @Autowired
-    private PasswordEncoder encoder;
+    private final BookStoreUserServiceImpl service;
+    private final PasswordEncoder encoder;
+
+    public UsersController(BookStoreUserServiceImpl service, PasswordEncoder encoder) {
+        this.service = service;
+        this.encoder = encoder;
+    }
 
     @GetMapping
     @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public List<BookStoreUserDTO> findAll(){
+    public List<BookStoreUserDTO> findAll() {
         return service.findAll();
     }
 
@@ -34,7 +36,7 @@ public class UsersController {
     @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public BookStoreUserDTO findById(@PathVariable("id") Integer id) throws NotFoundException {
-        BookStoreUserDTO userDTO =  service.findByKey(id);
+        BookStoreUserDTO userDTO = service.findByKey(id);
         if (userDTO == null) {
             throw new NotFoundException("Such user was not found!");
         }
@@ -56,7 +58,7 @@ public class UsersController {
     @PatchMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public String update(@PathVariable("id") Integer id, @Valid @RequestBody BookStoreUserDTO bookStoreUserDTO){
+    public String update(@PathVariable("id") Integer id, @Valid @RequestBody BookStoreUserDTO bookStoreUserDTO) {
         service.update(id, bookStoreUserDTO);
         return "Success!";
     }
@@ -64,7 +66,7 @@ public class UsersController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String delete(@PathVariable("id") Integer id){
+    public String delete(@PathVariable("id") Integer id) {
         service.delete(id);
         return "Delete successful!";
     }
@@ -82,7 +84,7 @@ public class UsersController {
 
     @GetMapping("/me")
     @ResponseStatus(HttpStatus.OK)
-    public BookStoreUserDTO getPersonalData(Authentication authentication){
+    public BookStoreUserDTO getPersonalData(Authentication authentication) {
         return service.findByUsername(authentication.getName());
     }
 

@@ -1,9 +1,7 @@
 package org.teamwork.spring.bookstoremvcrest.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.teamwork.spring.bookstoremvcrest.mapper.abstraction.AbstractMapper;
-import org.teamwork.spring.bookstoremvcrest.model.Book;
 import org.teamwork.spring.bookstoremvcrest.model.BookCategory;
 import org.teamwork.spring.bookstoremvcrest.model.dto.BookCategoryDTO;
 import org.teamwork.spring.bookstoremvcrest.repository.BookCategoryRepository;
@@ -15,15 +13,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class BookCategoryServiceImpl implements DefaultService<BookCategoryDTO, BookCategory, Integer> {
-    @Autowired
-    private BookCategoryRepository bookCategoryRepository;
-    @Autowired
-    private AbstractMapper mapper;
+    private final BookCategoryRepository bookCategoryRepository;
+    private final AbstractMapper mapper;
+
+    public BookCategoryServiceImpl(BookCategoryRepository bookCategoryRepository, AbstractMapper mapper) {
+        this.bookCategoryRepository = bookCategoryRepository;
+        this.mapper = mapper;
+    }
+
     @Override
     public List<BookCategoryDTO> findAll() {
         List<BookCategory> bookCategories = bookCategoryRepository.findAll();
-        List<BookCategoryDTO> bookCategoryDTOS = bookCategories.stream().map(bookCategory -> mapper.toDTO(bookCategory, BookCategoryDTO.class)).collect(Collectors.toList());
-        return bookCategoryDTOS;
+        return bookCategories.stream().map(bookCategory -> mapper.toDTO(bookCategory, BookCategoryDTO.class)).collect(Collectors.toList());
     }
 
     @Override

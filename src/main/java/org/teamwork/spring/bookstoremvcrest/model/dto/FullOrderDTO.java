@@ -2,7 +2,6 @@ package org.teamwork.spring.bookstoremvcrest.model.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import org.teamwork.spring.bookstoremvcrest.model.dto.LightOrderItemDTO;
 
 import java.util.ArrayList;
 import java.util.Date;

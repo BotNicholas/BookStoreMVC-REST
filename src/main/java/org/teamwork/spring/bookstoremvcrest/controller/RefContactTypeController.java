@@ -1,7 +1,6 @@
 package org.teamwork.spring.bookstoremvcrest.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/ref-contact-types")
 public class RefContactTypeController {
-    @Autowired
-    private RefContactTypeServiceImpl contactTypeService;
+    private final RefContactTypeServiceImpl contactTypeService;
+
+    public RefContactTypeController(RefContactTypeServiceImpl contactTypeService) {
+        this.contactTypeService = contactTypeService;
+    }
 
     @GetMapping()
     @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")

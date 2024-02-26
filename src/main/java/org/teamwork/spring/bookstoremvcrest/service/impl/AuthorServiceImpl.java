@@ -1,6 +1,5 @@
 package org.teamwork.spring.bookstoremvcrest.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.teamwork.spring.bookstoremvcrest.mapper.abstraction.AbstractMapper;
 import org.teamwork.spring.bookstoremvcrest.model.Author;
@@ -13,16 +12,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class AuthorServiceImpl implements DefaultService<AuthorDTO, Author, Integer> {
-    @Autowired
-    private AuthorRepository authorRepository;
-    @Autowired
-    private AbstractMapper mapper;
+    private final AuthorRepository authorRepository;
+    private final AbstractMapper mapper;
+
+    public AuthorServiceImpl(AuthorRepository authorRepository, AbstractMapper mapper) {
+        this.authorRepository = authorRepository;
+        this.mapper = mapper;
+    }
 
     @Override
     public List<AuthorDTO> findAll() {
         List<Author> authors = authorRepository.findAll();
-        List<AuthorDTO> authorsDTOS = authors.stream().map(author -> mapper.toDTO(author, AuthorDTO.class)).collect(Collectors.toList());
-        return authorsDTOS;
+        return authors.stream().map(author -> mapper.toDTO(author, AuthorDTO.class)).collect(Collectors.toList());
     }
 
     @Override

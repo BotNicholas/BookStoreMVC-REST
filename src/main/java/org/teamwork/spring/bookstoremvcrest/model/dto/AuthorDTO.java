@@ -7,11 +7,9 @@ import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-public class AuthorDTO implements DefaultDTO{
+public class AuthorDTO implements DefaultDTO {
     private Integer id;
     @NotEmpty(message = "Firstname can not be empty!")
     private String firstname;
@@ -127,7 +125,7 @@ public class AuthorDTO implements DefaultDTO{
         this.books = books;
     }
 
-    public void addBook(Integer bookId){
+    public void addBook(Integer bookId) {
         books.add(bookId);
     }
 

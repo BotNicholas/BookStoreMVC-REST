@@ -38,13 +38,13 @@ public class OrderItemControllerTest {
     @MockBean
     private OrderItemServiceImpl service;
 
-    private CostumerDTO costumerDTO1 = new CostumerDTO(1, "1000000000000", "test costumer1", "test address1", "+37310000000", "example1@gmail.com");;
-    private OrderDTO orderDTO1 = new OrderDTO(costumerDTO1, new Date(), 10.0, List.of(1));
-    private AuthorDTO authorDTO = new AuthorDTO("a", "ab", "ab", LocalDate.of(2000, 04, 23), "M", "+37379344245", "sport analyst");
-    private BookCategoryDTO bookCategoryDTO = new BookCategoryDTO("lots of plot-twists");
-    private BookDTO bookDTO = new BookDTO(authorDTO,bookCategoryDTO, "123-4-22-234567-1", LocalDate.of(2000, 04, 23), LocalDate.of(2005, 04, 28), "Sample Book Title", 19.99, "Sample comments about the book.");
-    private OrderItemDTO orderItemDTO1 = new OrderItemDTO(orderDTO1, bookDTO, 20.5, "comment1");
-    private OrderItemDTO orderItemDTO2 = new OrderItemDTO(orderDTO1, bookDTO, 25.0, "comment2");
+    private final CostumerDTO costumerDTO1 = new CostumerDTO(1, "1000000000000", "test costumer1", "test address1", "+37310000000", "example1@gmail.com");
+    private final OrderDTO orderDTO1 = new OrderDTO(costumerDTO1, new Date(), 10.0, List.of(1));
+    private final AuthorDTO authorDTO = new AuthorDTO("a", "ab", "ab", LocalDate.of(2000, 04, 23), "M", "+37379344245", "sport analyst");
+    private final BookCategoryDTO bookCategoryDTO = new BookCategoryDTO("lots of plot-twists");
+    private final BookDTO bookDTO = new BookDTO(authorDTO, bookCategoryDTO, "123-4-22-234567-1", LocalDate.of(2000, 04, 23), LocalDate.of(2005, 04, 28), "Sample Book Title", 19.99, "Sample comments about the book.");
+    private final OrderItemDTO orderItemDTO1 = new OrderItemDTO(orderDTO1, bookDTO, 20.5, "comment1");
+    private final OrderItemDTO orderItemDTO2 = new OrderItemDTO(orderDTO1, bookDTO, 25.0, "comment2");
 
     @Test
     @DisplayName("find all order items test...")
@@ -65,7 +65,7 @@ public class OrderItemControllerTest {
     public void findFirstOrderItem() throws Exception {
         Mockito.when(service.findByKey(1)).thenReturn(orderItemDTO1);
 
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL+"/1")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/1")
                 .characterEncoding(StandardCharsets.UTF_8));
 
         actions.andExpect(MockMvcResultMatchers.status().isOk())
@@ -76,7 +76,7 @@ public class OrderItemControllerTest {
     @Test
     @DisplayName("find non-existing user item test...")
     public void findFalseOrderItem() throws Exception {
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL+"/777")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/777")
                 .characterEncoding(StandardCharsets.UTF_8));
 
         actions.andExpect(MockMvcResultMatchers.status().isNotFound())
@@ -121,7 +121,7 @@ public class OrderItemControllerTest {
     public void updateFirstOrderItem() throws Exception {
         Mockito.when(service.update(1, orderItemDTO1)).thenReturn(orderItemDTO1);
 
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.patch(URL+"/1")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.patch(URL + "/1")
                 .characterEncoding(StandardCharsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(orderItemDTO1)));
@@ -133,8 +133,8 @@ public class OrderItemControllerTest {
 
     @Test
     @DisplayName("delete 1'st order item test...")
-    public void deleteFirstOrderItem() throws Exception{
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.delete(URL+"/1")
+    public void deleteFirstOrderItem() throws Exception {
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.delete(URL + "/1")
                 .characterEncoding(StandardCharsets.UTF_8));
 
         actions.andExpect(MockMvcResultMatchers.status().isNoContent())

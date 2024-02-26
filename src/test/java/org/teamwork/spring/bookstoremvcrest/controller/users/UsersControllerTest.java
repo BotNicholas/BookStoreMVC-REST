@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.FactoryBeanNotInitializedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -24,7 +23,6 @@ import org.teamwork.spring.bookstoremvcrest.security.services.BookStoreUserServi
 import org.teamwork.spring.bookstoremvcrest.utils.NotFoundError;
 import org.teamwork.spring.bookstoremvcrest.utils.UsedIdError;
 
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -43,12 +41,12 @@ public class UsersControllerTest {
     @MockBean
     private PasswordEncoder encoder;
 
-    private CostumerDTO costumerDTO1 = new CostumerDTO(1, "1000000000000", "test costumer1", "test address1", "+37310000000", "example1@gmail.com");
-    private CostumerDTO costumerDTO2 = new CostumerDTO(2, "2000000000000", "test costumer2", "test address2", "+37320000000", "example2@gmail.com");
-    private BookStoreUserDTO bookStoreUserDTO1 = new BookStoreUserDTO("user1", "password", "ROLE_USER", costumerDTO1);
-    private BookStoreUserDTO bookStoreUserDTO2 = new BookStoreUserDTO("user2", "password", "ROLE_USER", costumerDTO2);
+    private final CostumerDTO costumerDTO1 = new CostumerDTO(1, "1000000000000", "test costumer1", "test address1", "+37310000000", "example1@gmail.com");
+    private final CostumerDTO costumerDTO2 = new CostumerDTO(2, "2000000000000", "test costumer2", "test address2", "+37320000000", "example2@gmail.com");
+    private final BookStoreUserDTO bookStoreUserDTO1 = new BookStoreUserDTO("user1", "Password_123", "ROLE_USER", costumerDTO1);
+    private final BookStoreUserDTO bookStoreUserDTO2 = new BookStoreUserDTO("user2", "Password_123", "ROLE_USER", costumerDTO2);
 
-    private BookStoreRegistrationUserDTO registrationUserDTO = new BookStoreRegistrationUserDTO("username", "password", costumerDTO1);
+    private final BookStoreRegistrationUserDTO registrationUserDTO = new BookStoreRegistrationUserDTO("username", "Password_123", costumerDTO1);
 
 
     @Test
@@ -70,7 +68,7 @@ public class UsersControllerTest {
     public void findFirstUser() throws Exception {
         Mockito.when(service.findByKey(1)).thenReturn(bookStoreUserDTO1);
 
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL+"/1")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/1")
                 .characterEncoding(StandardCharsets.UTF_8));
 
         actions.andExpect(MockMvcResultMatchers.status().isOk())
@@ -81,7 +79,7 @@ public class UsersControllerTest {
     @Test
     @DisplayName("find non-existing user test...")
     public void findNonExistingUser() throws Exception {
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL+"/777")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.get(URL + "/777")
                 .characterEncoding(StandardCharsets.UTF_8));
 
         actions.andExpect(MockMvcResultMatchers.status().isNotFound())
@@ -126,7 +124,7 @@ public class UsersControllerTest {
     public void registerUserWithoutId() throws Exception {
         Mockito.when(service.register(registrationUserDTO)).thenReturn(bookStoreUserDTO1);
 
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(URL+"/register")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(URL + "/register")
                 .characterEncoding(StandardCharsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(registrationUserDTO)));
@@ -138,10 +136,10 @@ public class UsersControllerTest {
 
     @Test
     @DisplayName("register new user with id...")
-    public void registerUserWithId() throws Exception{
+    public void registerUserWithId() throws Exception {
         registrationUserDTO.setId(1);
 
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(URL+"/register")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.post(URL + "/register")
                 .characterEncoding(StandardCharsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(registrationUserDTO)));
@@ -158,7 +156,7 @@ public class UsersControllerTest {
     public void updateFirstUser() throws Exception {
         Mockito.when(service.update(1, bookStoreUserDTO1)).thenReturn(bookStoreUserDTO1);
 
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.patch(URL+"/1")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.patch(URL + "/1")
                 .characterEncoding(StandardCharsets.UTF_8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(bookStoreUserDTO1)));
@@ -171,7 +169,7 @@ public class UsersControllerTest {
     @Test
     @DisplayName("delete 1'st user test...")
     public void deleteFirstUser() throws Exception {
-        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.delete(URL+"/1")
+        ResultActions actions = mockMvc.perform(MockMvcRequestBuilders.delete(URL + "/1")
                 .characterEncoding(StandardCharsets.UTF_8));
 
         actions.andExpect(MockMvcResultMatchers.status().isNoContent())

@@ -1,7 +1,6 @@
 package org.teamwork.spring.bookstoremvcrest.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -9,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.teamwork.spring.bookstoremvcrest.exceptions.NotFoundException;
 import org.teamwork.spring.bookstoremvcrest.exceptions.UnexpectedIdException;
 import org.teamwork.spring.bookstoremvcrest.model.Costumer;
-import org.teamwork.spring.bookstoremvcrest.model.dto.LightOrderItemDTO;
 import org.teamwork.spring.bookstoremvcrest.model.dto.FullOrderDTO;
+import org.teamwork.spring.bookstoremvcrest.model.dto.LightOrderItemDTO;
 import org.teamwork.spring.bookstoremvcrest.model.dto.MyFullOrderDTO;
 import org.teamwork.spring.bookstoremvcrest.security.details.BookStoreUserDetails;
 import org.teamwork.spring.bookstoremvcrest.service.impl.OrderServiceImpl;
@@ -20,12 +19,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-    @Autowired
-    private OrderServiceImpl service;
+    private final OrderServiceImpl service;
+
+    public OrderController(OrderServiceImpl service) {
+        this.service = service;
+    }
+
     @GetMapping("")
     @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public List<FullOrderDTO> findAll(){
+    public List<FullOrderDTO> findAll() {
         return service.findAll();
     }
 
@@ -72,11 +75,9 @@ public class OrderController {
         return "Delete successful!";
     }
 
-
-
     @GetMapping("/my")
     @ResponseStatus(HttpStatus.OK)
-    public List<FullOrderDTO> myOrders(Authentication authentication){
+    public List<FullOrderDTO> myOrders(Authentication authentication) {
         BookStoreUserDetails userDetails = (BookStoreUserDetails) authentication.getPrincipal();
         return service.findAllByCostumer(userDetails.getUser().getCostumer());
     }
@@ -92,5 +93,4 @@ public class OrderController {
         service.saveForCustomer(myOrderDTO, costumer);
         return "Success!";
     }
-
 }

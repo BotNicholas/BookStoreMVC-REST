@@ -1,15 +1,12 @@
 package org.teamwork.spring.bookstoremvcrest.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.teamwork.spring.bookstoremvcrest.exceptions.NotFoundException;
 import org.teamwork.spring.bookstoremvcrest.exceptions.UnexpectedIdException;
-import org.teamwork.spring.bookstoremvcrest.model.Order;
-import org.teamwork.spring.bookstoremvcrest.model.dto.OrderDTO;
 import org.teamwork.spring.bookstoremvcrest.model.dto.OrderItemDTO;
 import org.teamwork.spring.bookstoremvcrest.security.details.BookStoreUserDetails;
 import org.teamwork.spring.bookstoremvcrest.service.impl.OrderItemServiceImpl;
@@ -19,8 +16,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/order-items")
 public class OrderItemController {
-    @Autowired
-    private OrderItemServiceImpl orderItemService;
+    private final OrderItemServiceImpl orderItemService;
+
+    public OrderItemController(OrderItemServiceImpl orderItemService) {
+        this.orderItemService = orderItemService;
+    }
 
     @GetMapping()
     @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
@@ -69,7 +69,7 @@ public class OrderItemController {
 
     @GetMapping("/my")
     @ResponseStatus(HttpStatus.OK)
-    public List<OrderItemDTO> findMy(Authentication authentication){
+    public List<OrderItemDTO> findMy(Authentication authentication) {
         BookStoreUserDetails userDetails = (BookStoreUserDetails) authentication.getPrincipal();
         return orderItemService.findAllByCostumer(userDetails.getUser().getCostumer());
     }

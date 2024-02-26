@@ -1,9 +1,7 @@
 package org.teamwork.spring.bookstoremvcrest.security.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.teamwork.spring.bookstoremvcrest.exceptions.NotFoundException;
 import org.teamwork.spring.bookstoremvcrest.mapper.abstraction.AbstractMapperImpl;
 import org.teamwork.spring.bookstoremvcrest.model.Costumer;
 import org.teamwork.spring.bookstoremvcrest.repository.CostumerRepository;
@@ -18,12 +16,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class BookStoreUserServiceImpl implements DefaultService<BookStoreUserDTO, BookStoreUser, Integer> {
-    @Autowired
-    private BookStoreUserRepository repository;
-    @Autowired
-    private CostumerRepository costumerRepository;
-    @Autowired
-    private AbstractMapperImpl mapper;
+    private final BookStoreUserRepository repository;
+    private final CostumerRepository costumerRepository;
+    private final AbstractMapperImpl mapper;
+
+    public BookStoreUserServiceImpl(BookStoreUserRepository repository, CostumerRepository costumerRepository, AbstractMapperImpl mapper) {
+        this.repository = repository;
+        this.costumerRepository = costumerRepository;
+        this.mapper = mapper;
+    }
 
     @Override
     public List<BookStoreUserDTO> findAll() {
@@ -39,9 +40,9 @@ public class BookStoreUserServiceImpl implements DefaultService<BookStoreUserDTO
         return mapper.toDTO(repository.findByUsername(username), BookStoreUserDTO.class);
     }
 
-    private BookStoreUserDTO save(BookStoreUser user){
+    private BookStoreUserDTO save(BookStoreUser user) {
         if (user.getCostumer() == null) {
-            Costumer costumerForUser = costumerRepository.save(new Costumer(user.getUsername())); //creating empty costumer for new user
+            Costumer costumerForUser = costumerRepository.save(new Costumer(user.getUsername()));
             user.setCostumer(costumerForUser);
         }
         user = repository.save(user);
@@ -54,9 +55,9 @@ public class BookStoreUserServiceImpl implements DefaultService<BookStoreUserDTO
         return save(user);
     }
 
-    public BookStoreUserDTO register(BookStoreRegistrationUserDTO registrationUserDTO){
+    public BookStoreUserDTO register(BookStoreRegistrationUserDTO registrationUserDTO) {
         BookStoreUser bookStoreUser = mapper.toEntity(registrationUserDTO, BookStoreUser.class);
-        bookStoreUser.setRoles("ROLE_USER"); //setting default Role
+        bookStoreUser.setRoles("ROLE_USER");
         return save(bookStoreUser);
     }
 
@@ -81,9 +82,7 @@ public class BookStoreUserServiceImpl implements DefaultService<BookStoreUserDTO
     @Override
     public void delete(Integer key) {
         BookStoreUser user = repository.findById(key).orElseThrow(() -> new IllegalArgumentException("Such user does no exist!"));
-        //Delete user
         repository.deleteById(key);
-        //Delete iss Costumer
         costumerRepository.deleteById(user.getCostumer().getId());
     }
 }

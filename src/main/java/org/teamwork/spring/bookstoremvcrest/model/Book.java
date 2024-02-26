@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name = "books")
@@ -25,7 +24,7 @@ public class Book {
     @JoinColumn(name = "book_category_code", referencedColumnName = "code")
     private BookCategory category;
     @NotEmpty(message = "ISBN can not be empty!")
-    @Pattern(regexp = "\\d\\d\\d-\\d-\\d\\d-\\d\\d\\d\\d\\d\\d-\\d", message = "ISBN must be in format: xxx-x-xx-xxxxxx-x")
+    @Pattern(regexp = "^\\d{3}-\\d-\\d{2}-\\d{6}-\\d$", message = "ISBN must be in format: xxx-x-xx-xxxxxx-x")
     @Length(min = 17, max = 17)
     private String isbn;
     @NotNull(message = "Publication date must be specified!")

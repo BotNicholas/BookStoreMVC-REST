@@ -18,7 +18,7 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "book_id", referencedColumnName = "id")
     private Book book;
-    @Min(value = 1, message = "Minipal agreed price is 1")
+    @Min(value = 1, message = "Minimal agreed price is 1")
     @Column(name = "item_Agreed_Price")
     private Double itemAgreedPrice;
     @Column(name = "item_comment")
